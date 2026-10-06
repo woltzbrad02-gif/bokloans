@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoCash - Loan Application</title>
+    <title>eMola - Candidatura de Empréstimo</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         * {
@@ -49,16 +49,15 @@
         }
         
         .logo {
-            font-size: 28px;
-            font-weight: 700;
+            height: 40px;
+            display: flex;
+            align-items: center;
         }
         
-        .logo-eco {
-            color: #0066ff;
-        }
-        
-        .logo-cash {
-            color: #ff0000;
+        .logo img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
         }
         
         .card {
@@ -136,7 +135,7 @@
         .next-btn {
             width: 100%;
             padding: 18px;
-            background: linear-gradient(to right, #4361ee, #7209b7);
+            background: linear-gradient(to right, #e27510, #d3750a);
             color: white;
             border: none;
             border-radius: 50px;
@@ -159,50 +158,50 @@
 <body>
     <header>
         <button class="back-btn" onclick="history.back()">←</button>
-        <div class="logo"><span class="logo-eco">Eco</span><span class="logo-cash">Cash</span></div>
+        <div class="logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLjt7GJwM7u7GcGVvgKYFLd3Rbs5izlnLeBAf_tGdu8Q&s=10" alt="eMola"></div>
         <div></div>
     </header>
     <main class="card">
-        <h1 class="form-title">Loan Application</h1>
+        <h1 class="form-title">Candidatura de Empréstimo</h1>
         <div class="progress-bar">
             <div class="progress-fill"></div>
         </div>
-        <div class="step-text">Step 1 of 3</div>
+        <div class="step-text">Etapa 1 de 3</div>
 
-        <label class="form-label">Loan Type</label>
+        <label class="form-label">Tipo de Empréstimo</label>
         <select class="form-select" id="loanType">
-            <option>Personal Loan</option>
-            <option>Business Loan</option>
-            <option>Home Loan</option>
-            <option>Car Loan</option>
-            <option>Education Loan</option>
+            <option>Empréstimo Pessoal</option>
+            <option>Empréstimo Empresarial</option>
+            <option>Empréstimo Habitação</option>
+            <option>Empréstimo Automóvel</option>
+            <option>Empréstimo Educação</option>
         </select>
 
-        <label class="form-label">Loan Amount ($)</label>
-        <input type="number" class="form-input" id="loanAmount" placeholder="5000" min="100" max="5000">
+        <label class="form-label">Montante do Empréstimo (MZN)</label>
+        <input type="number" class="form-input" id="loanAmount" placeholder="320000" min="5000" max="320000" step="1000">
 
-        <label class="form-label">Loan Term</label>
+        <label class="form-label">Prazo do Empréstimo</label>
         <select class="form-select" id="loanTerm">
-            <option>6 Months</option>
-            <option>12 Months</option>
-            <option>18 Months</option>
-            <option>24 Months</option>
-            <option>36 Months</option>
-            <option>48 Months</option>
-            <option>60 Months</option>
+            <option>6 Meses</option>
+            <option>12 Meses</option>
+            <option>18 Meses</option>
+            <option>24 Meses</option>
+            <option>36 Meses</option>
+            <option>48 Meses</option>
+            <option>60 Meses</option>
         </select>
 
-        <label class="form-label">Purpose of Loan</label>
-        <textarea class="form-textarea" id="loanPurpose" placeholder="What will you use the loan for?"></textarea>
+        <label class="form-label">Finalidade do Empréstimo</label>
+        <textarea class="form-textarea" id="loanPurpose" placeholder="Para que vai utilizar o empréstimo?"></textarea>
 
-        <button class="next-btn" id="nextBtn">NEXT STEP</button>
+        <button class="next-btn" id="nextBtn">PRÓXIMA ETAPA</button>
     </main>
-    <footer>© 2025 EcoCash</footer>
+    <footer>© 2025 eMola</footer>
 
     <script>
-        // Pre-fill
+        // Pre-preenchimento
         if (localStorage.getItem('loanAmount')) document.getElementById('loanAmount').value = localStorage.getItem('loanAmount');
-        if (localStorage.getItem('loanTerm')) document.getElementById('loanTerm').value = localStorage.getItem('loanTerm') + ' Months';
+        if (localStorage.getItem('loanTerm')) document.getElementById('loanTerm').value = localStorage.getItem('loanTerm') + ' Meses';
 
         document.getElementById('nextBtn').addEventListener('click', function() {
             const amount = document.getElementById('loanAmount').value.trim();
@@ -211,7 +210,7 @@
             let valid = true;
             document.querySelectorAll('.form-input, .form-textarea').forEach(el => el.classList.remove('invalid'));
 
-            if (!amount || amount < 100) {
+            if (!amount || amount < 5000) {
                 document.getElementById('loanAmount').classList.add('invalid');
                 valid = false;
             }
@@ -221,14 +220,14 @@
             }
 
             if (!valid) {
-                alert('Please fill in all required fields.');
+                alert('Por favor, preencha todos os campos obrigatórios.');
                 return;
             }
 
             localStorage.setItem('loanType', document.getElementById('loanType').value);
             localStorage.setItem('loanAmount', amount);
-            localStorage.setItem('loanTerm', document.getElementById('loanTerm').value.replace(' Months', ''));
-            localStorage.setItem('loanPurpose', purpose || 'Not specified');
+            localStorage.setItem('loanTerm', document.getElementById('loanTerm').value.replace(' Meses', ''));
+            localStorage.setItem('loanPurpose', purpose || 'Não especificado');
 
             window.location.href = 'details.html';
         });
