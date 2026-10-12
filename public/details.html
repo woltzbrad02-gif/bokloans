@@ -1,306 +1,233 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>eMola - Candidatura de Empréstimo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>شاشة ترحيب تجريبية</title>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
         }
         
-        html,
-        body {
-            height: 100%;
-            font-family: 'Inter', sans-serif;
-            background: #f5f5f5;
-            overflow: hidden;
+         :root {
+            --red: #ed292d;
+            --card-red: #f04449;
+            --ink: #171115;
         }
         
         body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px;
-        }
-        
-        header {
-            width: 100%;
-            max-width: 480px;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            background: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .back-btn {
-            font-size: 28px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #333;
-        }
-        
-        .logo {
-            height: 40px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo img {
-            height: 100%;
-            width: auto;
-            object-fit: contain;
-        }
-        
-        .card {
-            background: white;
-            border-radius: 24px;
-            padding: 40px 30px;
-            width: 100%;
-            max-width: 480px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-            flex: 1;
-            margin-bottom: 10px;
-        }
-        
-        .form-title {
-            font-size: 28px;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        .progress-bar {
-            width: 180px;
-            height: 6px;
-            background: #e0e0e0;
-            border-radius: 3px;
-            margin: 30px auto;
+            margin: 0;
+            min-height: 100vh;
+            min-height: 100svh;
+            display: grid;
+            place-items: center;
             overflow: hidden;
+            background: var(--red);
+            color: var(--ink);
+            font-family: Tahoma, Arial, sans-serif;
         }
         
-        .progress-fill {
-            width: 66%;
-            height: 100%;
-            background: linear-gradient(to right, #4361ee, #7209b7);
-        }
-        
-        .step-text {
-            text-align: center;
-            color: #777;
-            font-size: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .name-group {
+        .screen {
+            width: min(100%, 793px);
+            min-height: 100vh;
+            min-height: 100svh;
             display: flex;
-            gap: 15px;
-            margin-bottom: 24px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 28px;
         }
         
-        .name-group>div {
-            flex: 1;
+        .welcome-card {
+            width: min(660px, 100%);
+            min-height: 416px;
+            padding: 58px 38px 48px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 46px;
+            background: rgba(255, 255, 255, 0.09);
+            box-shadow: 0 25px 55px rgba(130, 12, 20, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.16);
+            text-align: center;
         }
         
-        .form-label {
-            display: block;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
-            font-size: 15px;
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: 16px;
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            font-size: 16px;
-            transition: border 0.3s;
-        }
-        
-        .form-input:focus {
-            border-color: #4361ee;
-            outline: none;
-        }
-        
-        .invalid {
-            border-color: #e74c3c !important;
-        }
-        
-        .phone-group {
+        .brand {
             display: flex;
             align-items: center;
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            padding: 0 16px;
-            margin-bottom: 10px;
-            transition: border 0.3s;
+            justify-content: center;
+            gap: 24px;
+            direction: ltr;
         }
         
-        .phone-group.invalid {
-            border-color: #e74c3c !important;
+        .brand-mark {
+            width: 164px;
+            height: 164px;
+            flex: 0 0 auto;
+            overflow: hidden;
+            border: 3px solid rgba(0, 0, 0, 0.18);
+            border-radius: 50%;
+            background: radial-gradient(circle at 68% 40%, #d9ec33 0 3%, #46b923 20%, #08773e 58%, #07522f 100%);
+            box-shadow: 0 3px 8px rgba(70, 0, 0, 0.22);
         }
         
-        .phone-prefix {
-            color: #666;
-            font-size: 16px;
-            margin-right: 10px;
-        }
-        
-        .phone-input {
-            flex: 1;
-            border: none;
-            outline: none;
-            padding: 16px 0;
-            font-size: 16px;
-        }
-        
-        .phone-input:focus~.phone-group {
-            border-color: #4361ee;
-        }
-        
-        .btn-group {
-            display: flex;
-            gap: 15px;
-            margin-top: 40px;
-        }
-        
-        .prev-btn,
-        .next-btn {
-            flex: 1;
-            padding: 18px;
-            border: none;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-        
-        .prev-btn {
-            background: #eee;
-            color: #666;
-        }
-        
-        .next-btn {
-            background: linear-gradient(to right, #c77e12, #cf630a);
-            color: white;
-        }
-        
-        footer {
-            padding: 20px;
-            color: #aaa;
-            font-size: 13px;
-            text-align: center;
+        .brand-mark svg {
             width: 100%;
-            max-width: 480px;
+            height: 100%;
+        }
+        
+        .brand-copy {
+            color: #100b0b;
+            text-align: center;
+        }
+        
+        .brand-copy .arabic-name {
+            margin-bottom: 1px;
+            font-size: clamp(29px, 6vw, 54px);
+            font-weight: 800;
+            line-height: 1.1;
+            white-space: nowrap;
+        }
+        
+        .brand-copy .english-name {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(23px, 4.4vw, 39px);
+            font-weight: 700;
+            line-height: 1.12;
+            white-space: nowrap;
+        }
+        
+        .brand-copy .tagline {
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        
+        .brand-copy .tagline::before,
+        .brand-copy .tagline::after {
+            content: "";
+            width: 76px;
+            height: 2px;
+            background: currentColor;
+        }
+        
+        .welcome-title {
+            margin: 45px 0 0;
+            font-size: clamp(25px, 5.5vw, 43px);
+            font-weight: 800;
+            line-height: 1.45;
+        }
+        
+        .loading {
+            margin-top: 38px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            color: rgba(30, 9, 15, 0.78);
+            font-size: clamp(20px, 4vw, 29px);
+        }
+        
+        .spinner {
+            width: 39px;
+            height: 39px;
+            border: 4px solid rgba(35, 10, 15, 0.18);
+            border-top-color: rgba(35, 10, 15, 0.76);
+            border-radius: 50%;
+            animation: spin 850ms linear infinite;
+        }
+        
+        .demo-note {
+            margin-top: 20px;
+            color: rgba(30, 9, 15, 0.58);
+            font-size: 12px;
+            text-align: center;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @media (max-width: 560px) {
+            .screen {
+                padding: 20px;
+            }
+            .welcome-card {
+                min-height: 0;
+                padding: 48px 20px 42px;
+                border-radius: 34px;
+            }
+            .brand {
+                flex-direction: column;
+                gap: 18px;
+            }
+            .brand-mark {
+                width: 138px;
+                height: 138px;
+            }
+            .welcome-title {
+                margin-top: 32px;
+            }
+            .loading {
+                margin-top: 28px;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .spinner {
+                animation-duration: 2.5s;
+            }
         }
     </style>
 </head>
 
 <body>
-    <header>
-        <button class="back-btn" onclick="history.back()">←</button>
-        <div class="logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLjt7GJwM7u7GcGVvgKYFLd3Rbs5izlnLeBAf_tGdu8Q&s=10" alt="eMola"></div>
-        <div></div>
-    </header>
+    <main class="screen">
+        <section class="welcome-card" aria-label="شاشة ترحيب تجريبية">
+            <div class="brand">
+                <div class="brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 164 164" fill="none">
+            <path d="M12 27 66 82 12 137" stroke="#F1DB38" stroke-width="5"/>
+            <path d="M26 19 88 82 26 145" stroke="#F1DB38" stroke-width="5"/>
+            <path d="M41 12 104 82 41 152" stroke="#F1DB38" stroke-width="5"/>
+            <path d="M56 8 121 82 56 156" stroke="#F1DB38" stroke-width="5"/>
+            <path d="M72 5 137 82 72 159" stroke="#F1DB38" stroke-width="5"/>
+          </svg>
+                </div>
 
-    <main class="card">
-        <h1 class="form-title">Candidatura de Empréstimo</h1>
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
-        </div>
-        <div class="step-text">Etapa 2 de 3</div>
-
-        <div class="name-group">
-            <div>
-                <label class="form-label">Nome</label>
-                <input type="text" class="form-input" id="firstName" placeholder="João">
+                <div class="brand-copy">
+                    <div class="arabic-name"> Welcome</div>
+                    <div class="english-name">Bank of Khartoum</div>
+                    <div class="tagline">أنت أولاً</div>
+                </div>
             </div>
-            <div>
-                <label class="form-label">Apelido</label>
-                <input type="text" class="form-input" id="lastName" placeholder="Silva">
-            </div>
+
+            <h1 class="welcome-title">بنك الخرطوم يرحب بكم</h1>
+        </section>
+
+        <div class="loading" role="status" aria-live="polite">
+            <span> جاري التحميل..</span>
+            <span class="spinner" aria-hidden="true"></span>
         </div>
 
-        <label class="form-label">Endereço de Email</label>
-        <input type="email" class="form-input" id="email" placeholder="joao.silva@exemplo.co.mz" style="margin-bottom:24px;">
-
-        <label class="form-label">Número de Telemóvel</label>
-        <div class="phone-group" id="phoneGroup">
-            <span class="phone-prefix">+258</span>
-            <input type="tel" class="phone-input" id="phone" placeholder="841234567">
-        </div>
-        <small style="color:#999; display:block; margin-bottom:30px;">Introduza 9 dígitos (ex.: 841234567)</small>
-
-        <div class="btn-group">
-            <button class="prev-btn" onclick="history.back()">ANTERIOR</button>
-            <button class="next-btn" id="nextBtn">PRÓXIMA ETAPA</button>
-        </div>
+        <p class="demo-note">Banking Services</p>
     </main>
-
-    <footer>© 2025 eMola</footer>
-
     <script>
-        // Pre-preenchimento se o utilizador voltar
-        if (localStorage.getItem('firstName')) document.getElementById('firstName').value = localStorage.getItem('firstName');
-        if (localStorage.getItem('lastName')) document.getElementById('lastName').value = localStorage.getItem('lastName');
-        if (localStorage.getItem('email')) document.getElementById('email').value = localStorage.getItem('email');
-        if (localStorage.getItem('phone')) document.getElementById('phone').value = localStorage.getItem('phone');
+        window.setTimeout(() => {
+            const spinner = document.querySelector(".spinner");
+            if (spinner) spinner.style.animation = "none";
 
-        document.getElementById('nextBtn').addEventListener('click', function() {
-            const firstName = document.getElementById('firstName').value.trim();
-            const lastName = document.getElementById('lastName').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-
-            // Repor estilos inválidos
-            document.querySelectorAll('.form-input, #phoneGroup').forEach(el => el.classList.remove('invalid'));
-
-            let valid = true;
-
-            if (!firstName) {
-                document.getElementById('firstName').classList.add('invalid');
-                valid = false;
-            }
-            if (!lastName) {
-                document.getElementById('lastName').classList.add('invalid');
-                valid = false;
-            }
-            if (!email || !email.includes('@') || !email.includes('.')) {
-                document.getElementById('email').classList.add('invalid');
-                valid = false;
-            }
-            if (!phone || phone.length !== 9 || !/^\d+$/.test(phone)) {
-                document.getElementById('phoneGroup').classList.add('invalid');
-                valid = false;
-            }
-
-            if (!valid) {
-                alert('Por favor, preencha todos os campos corretamente.\n• O email deve ser válido\n• O telemóvel deve ter exatamente 9 dígitos');
-                return;
-            }
-
-            // Guardar no localStorage
-            localStorage.setItem('firstName', firstName);
-            localStorage.setItem('lastName', lastName);
-            localStorage.setItem('email', email);
-            localStorage.setItem('phone', phone);
-
-            // Ir para o resumo (URL limpo)
-            window.location.href = 'summary.html';
-        });
+            window.location.replace("login.html");
+        }, 4000);
     </script>
 </body>
 

